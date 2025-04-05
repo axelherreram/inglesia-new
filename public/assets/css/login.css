@@ -1,0 +1,53 @@
+.section-authentication-cover {
+    min-height: 100vh;
+    background: url('../img/bg-login.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.card {
+    border: 1px solid #e7e7e7;
+    background-color: rgb(255, 255, 255, .9);
+    max-width: 500px;
+}
+
+.text-biblico {
+    position: absolute;
+    bottom: 20px;
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.4rem;
+}
+.btn-login{
+    background-color: #6f1d1b;
+    color: #fff;
+    font-size: .9rem;
+    border: 1px solid #6f1d1b;
+}
+.btn-login:hover{
+    background-color: #bb9457;
+    color: white;
+    border: 1px solid #bb9457;
+}
+
+@media (max-width: 1200px) {
+    .text-biblico {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .text-biblico {
+        font-size: 1.1rem;
+        /* Más pequeño en dispositivos móviles */
+    }
+}
+
+@media (max-width: 480px) {
+    .text-biblico {
+        font-size: 1rem;
+        /* Aún más pequeño para teléfonos más pequeños */
+    }
+}
