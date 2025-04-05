@@ -13,7 +13,7 @@ class personas extends Migration
             $table->string('nombres', 255);
             $table->string('apellidos', 255);
             $table->string('dpi_cui', 20)->unique();
-            $table->integer('municipio_id')->unsigned();
+            // $table->integer('municipio_id')->unsigned();
             $table->string('direccion', 255)->nullable();
             $table->date('fecha_nacimiento');
             $table->enum('sexo', ['M', 'F', 'O']);
@@ -26,7 +26,7 @@ class personas extends Migration
             $table->timestamps(0);
 
             // Claves foráneas
-            $table->foreign('municipio_id')->references('municipio_id')->on('municipio');
+            //$table->foreign('municipio_id')->references('municipio_id')->on('municipio');
             $table->foreign('padre_id')->references('persona_id')->on('personas');
             $table->foreign('madre_id')->references('persona_id')->on('personas');
             $table->foreign('padrino_id')->references('persona_id')->on('personas');
