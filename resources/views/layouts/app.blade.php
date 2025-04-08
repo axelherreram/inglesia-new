@@ -27,7 +27,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/semi-dark.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/header-colors.css') }}" />
     <link rel="shortcut icon" href="{{ asset('assets/icon/icon.ico') }}" type="image/x-icon">
-
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     <title>Iglesia Sansare</title>
     <style>
         footer {
@@ -76,6 +77,8 @@
     <script src="{{ asset('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
     <!--app JS-->
     <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @yield('script')
 </body>
 

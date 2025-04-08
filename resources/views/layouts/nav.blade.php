@@ -1,6 +1,198 @@
+<style>
+    /* Estilos para el cuerpo del offcanvas y los elementos de navegación */
+    .offcanvas-body {
+        padding: 1.25rem 1rem;
+    }
+
+    /* Estilos para la lista de navegación */
+    .navbar-nav {
+        width: 100%;
+        gap: 0.5rem;
+    }
+
+    /* Estilos para los items del menú */
+    .nav-item.dropdown {
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .nav-item.dropdown:hover {
+        background-color: rgba(74, 108, 247, 0.05);
+    }
+
+    /* Estilos para los enlaces del menú */
+    .nav-link.dropdown-toggle {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .nav-link.dropdown-toggle:hover {
+        background-color: rgba(74, 108, 247, 0.08);
+    }
+
+    /* Estilos para los iconos principales */
+    .parent-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        margin-right: 12px;
+        background-color: #f8f9fa;
+        transition: all 0.3s ease;
+    }
+
+    .parent-icon img {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+    }
+
+    /* Colores específicos para cada sección */
+    .nav-item:nth-child(1) .parent-icon {
+        background-color: rgba(74, 108, 247, 0.1);
+    }
+
+    .nav-item:nth-child(2) .parent-icon {
+        background-color: rgba(54, 185, 204, 0.1);
+    }
+
+    .nav-item:nth-child(3) .parent-icon {
+        background-color: rgba(231, 74, 59, 0.1);
+    }
+
+    .nav-item:nth-child(4) .parent-icon {
+        background-color: rgba(28, 200, 138, 0.1);
+    }
+
+    .nav-item:nth-child(5) .parent-icon {
+        background-color: rgba(246, 194, 62, 0.1);
+    }
+
+    /* Estilos para el título del menú */
+    .menu-title {
+        font-weight: 500;
+        font-size: 0.95rem;
+        color: #444;
+    }
+
+    /* Estilos para el icono de flecha */
+    .dropy-icon {
+        display: flex;
+        align-items: center;
+        transition: transform 0.3s ease;
+    }
+
+    .dropy-icon i {
+        font-size: 1.1rem;
+        color: #777;
+    }
+
+    .nav-link[aria-expanded="true"] .dropy-icon {
+        transform: rotate(180deg);
+    }
+
+    /* Estilos para el menú desplegable */
+    .dropdown-menu {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+        padding: 0.75rem 0;
+        margin-top: 0.5rem;
+        min-width: 220px;
+        animation: fadeIn 0.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Estilos para los items del dropdown */
+    .dropdown-item {
+        padding: 0.7rem 1.25rem;
+        display: flex;
+        align-items: center;
+        color: #555;
+        font-size: 0.9rem;
+        border-radius: 6px;
+        margin: 0 0.5rem;
+        transition: all 0.2s ease;
+    }
+
+    .dropdown-item i {
+        margin-right: 10px;
+        font-size: 1.1rem;
+        opacity: 0.8;
+        transition: all 0.2s ease;
+    }
+
+    .dropdown-item:hover {
+        background-color: rgba(74, 108, 247, 0.08);
+        color: #4a6cf7;
+    }
+
+    .dropdown-item:hover i {
+        opacity: 1;
+        color: #4a6cf7;
+    }
+
+    /* Animación para los iconos */
+    .fadeIn.animated {
+        animation: fadeInIcon 0.5s ease;
+    }
+
+    @keyframes fadeInIcon {
+        from {
+            opacity: 0;
+            transform: translateX(-5px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    /* Estilos responsivos */
+    @media (max-width: 992px) {
+        .navbar-nav {
+            padding: 0.5rem 0;
+        }
+
+        .nav-link.dropdown-toggle {
+            padding: 0.85rem 1rem;
+        }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: none;
+            background-color: rgba(74, 108, 247, 0.03);
+            padding: 0.5rem;
+            margin-top: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dropdown-item {
+            padding: 0.75rem 1rem;
+        }
+    }
+</style>
 <div class="primary-menu">
     <nav class="navbar navbar-expand-lg align-items-center">
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
+            aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header border-bottom">
                 <a href="{{ route('dashboard') }}" class="d-flex align-items-center">
                     <div class="">
@@ -14,6 +206,32 @@
             </div>
             <div class="offcanvas-body">
                 <ul class="navbar-nav align-items-center justify-content-center flex-grow-1">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
+                            data-bs-toggle="dropdown">
+                            <div class="parent-icon">
+                                <img src="{{ asset('/assets/icon/person.png') }}" class="logo-icon" alt="logo icon">
+                            </div>
+                            <div class="menu-title d-flex align-items-center">Personas</div>
+                            <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="{{ route('personas.create') }}">
+                                    <i class="fadeIn animated bx bx-plus-circle"></i>
+                                    Nueva persona
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('personas.index') }}">
+                                    <i class='fadeIn animated bx bx-list-ul'></i>
+                                    Ver personas
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
                             data-bs-toggle="dropdown">
@@ -113,147 +331,6 @@
                             </li>
                         </ul>
                     </li>
-                    {{--    
-              <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
-                            data-bs-toggle="dropdown">
-                            <div class="parent-icon"> <img src="{{ asset('/assets/icon/socios.png') }}"
-                                    class="logo-icon" alt="logo icon">
-                                </i>
-                            </div>
-                            <div class="menu-title d-flex align-items-center">Ingreso de personas</div>
-                            <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item m-0" href="/crear-persona">
-                                    <i class="fadeIn animated bx bx-news"></i>
-                                    Nueva persona
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
- --}}
-                    {{-- 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
-                            data-bs-toggle="dropdown">
-                            <div class="parent-icon"><i class='bx bx-home-alt'></i>
-                            </div>
-                            <div class="menu-title d-flex align-items-center">Dashboard</div>
-                            <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url('index') }}"><i
-                                        class='bx bx-pie-chart-alt'></i>Default</a></li>
-                            <li><a class="dropdown-item" href="{{ url('dashboard-alternate') }}"><i
-                                        class='bx bx-shield-alt-2'></i>Alternate</a></li>
-                            <li><a class="dropdown-item" href="{{ url('dashboard-analytics') }}"><i
-                                        class='bx bx-line-chart'></i>Graphical</a></li>
-                        </ul>
-                    </li> --}}
-
-
-                    {{-- 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
-                            data-bs-toggle="dropdown">
-                            <div class="parent-icon"><i class='bx bx-lock'></i>
-                            </div>
-                            <div class="menu-title d-flex align-items-center">Authentication</div>
-                            <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="nav-item dropend">
-                                <a class="dropdown-item dropdown-toggle dropdown-toggle-nocaret"
-                                    href="javascript:;"><i class='bx bx-receipt'></i>Basic</a>
-                                <ul class="dropdown-menu submenu">
-                                    <li><a class="dropdown-item" href="{{ url('auth-basic-signin') }}"><i
-                                                class='bx bx-radio-circle'></i>Sign In</a></li>
-                                    <li><a class="dropdown-item" href="{{ url('auth-basic-signup') }}"><i
-                                                class='bx bx-radio-circle'></i>Sign Up</a></li>
-                                    <li><a class="dropdown-item" href="{{ url('auth-basic-forgot-password') }}"><i
-                                                class='bx bx-radio-circle'></i>Forgot Password</a></li>
-                                    <li><a class="dropdown-item" href="{{ url('auth-basic-reset-password') }}"><i
-                                                class='bx bx-radio-circle'></i>Reset Password</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropend">
-                                <a class="dropdown-item dropdown-toggle dropdown-toggle-nocaret"
-                                    href="javascript:;"><i class='bx bx-cylinder'></i>Cover</a>
-                                <ul class="dropdown-menu submenu">
-                                    <li><a class="dropdown-item" href="{{ url('auth-cover-signin') }}"><i
-                                                class='bx bx-radio-circle'></i>Sign In</a></li>
-                                    <li><a class="dropdown-item" href="{{ url('auth-cover-signup') }}"><i
-                                                class='bx bx-radio-circle'></i>Sign Up</a></li>
-                                    <li><a class="dropdown-item" href="{{ url('auth-cover-forgot-password') }}"><i
-                                                class='bx bx-radio-circle'></i>Forgot Password</a></li>
-                                    <li><a class="dropdown-item" href="{{ url('auth-cover-reset-password') }}"><i
-                                                class='bx bx-radio-circle'></i>Reset Password</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropend">
-                                <a class="dropdown-item dropdown-toggle dropdown-toggle-nocaret"
-                                    href="javascript:;"><i class='bx bx-aperture'></i>Header & Footer</a>
-                                <ul class="dropdown-menu submenu">
-                                    <li><a class="dropdown-item" href="{{ url('auth-header-footer-signin') }}"><i
-                                                class='bx bx-radio-circle'></i>Sign In</a></li>
-                                    <li><a class="dropdown-item" href="{{ url('auth-header-footer-signup') }}"><i
-                                                class='bx bx-radio-circle'></i>Sign Up</a></li>
-                                    <li><a class="dropdown-item"
-                                            href="{{ url('auth-header-footer-forgot-password') }}"><i
-                                                class='bx bx-radio-circle'></i>Forgot Password</a></li>
-                                    <li><a class="dropdown-item"
-                                            href="{{ url('auth-header-footer-reset-password') }}"><i
-                                                class='bx bx-radio-circle'></i>Reset Password</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
-                            data-bs-toggle="dropdown">
-                            <div class="parent-icon"><i class='bx bx-line-chart'></i>
-                            </div>
-                            <div class="menu-title d-flex align-items-center">Charts</div>
-                            <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url('charts-apex-chart') }}"><i
-                                        class='bx bx-bar-chart-alt-2'></i>Apex</a></li>
-                            <li><a class="dropdown-item" href="{{ url('charts-chartjs') }}"><i
-                                        class='bx bx-line-chart'></i>Chartjs</a></li>
-                            <li><a class="dropdown-item" href="{{ url('charts-highcharts') }}"><i
-                                        class='bx bx-pie-chart-alt'></i>HighCharts</a></li>
-                            <li class="nav-item dropend">
-                                <a class="dropdown-item dropdown-toggle dropdown-toggle-nocaret"
-                                    href="javascript:;"><i class='bx bx-map-pin'></i>Maps</a>
-                                <ul class="dropdown-menu submenu">
-                                    <li><a class="dropdown-item" href="{{ url('map-google-maps') }}"><i
-                                                class='bx bx-radio-circle'></i>Google Maps</a></li>
-                                    <li><a class="dropdown-item" href="{{ url('map-vector-maps') }}"><i
-                                                class='bx bx-radio-circle'></i>Vector Maps</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
-                            data-bs-toggle="dropdown">
-                            <div class="parent-icon"><i class="bx bx-grid-alt"></i>
-                            </div>
-                            <div class="menu-title d-flex align-items-center">Tables</div>
-                            <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url('table-basic-table') }}"><i
-                                        class='bx bx-table'></i>Basic Table</a></li>
-                            <li><a class="dropdown-item" href="{{ url('table-datatable') }}"><i
-                                        class='bx bx-data'></i>Data Table</a></li>
-                        </ul>
-                    </li>
-                 --}}
                 </ul>
             </div>
         </div>
