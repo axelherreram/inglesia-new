@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Persona extends Model
 {
     protected $table = 'personas';
+    protected $primaryKey = 'persona_id';
 
     protected $fillable = [
         'nombres',
@@ -24,4 +25,11 @@ class Persona extends Model
         'padrino_id',
         'madrina_id',
     ];
+    public function municipio()
+    {
+        return $this->belongsTo(Municipio::class, 'municipio_id', 'municipio_id');
+    }
+
+    
 }
+
