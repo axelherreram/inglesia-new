@@ -19,7 +19,7 @@ class Persona extends Model
         'fecha_nacimiento',
         'sexo',
         'num_telefono',
-        'tipo_persona',
+        'tipo_persona', 
         'padre_id',
         'madre_id',
         'padrino_id',
@@ -30,6 +30,29 @@ class Persona extends Model
         return $this->belongsTo(Municipio::class, 'municipio_id', 'municipio_id');
     }
 
-    
+     // Relación para el padre
+     public function padre()
+     {
+         return $this->belongsTo(self::class, 'padre_id');
+     }
+ 
+     // Relación para la madre
+     public function madre()
+     {
+         return $this->belongsTo(self::class, 'madre_id');
+     }
+ 
+     // Relación para el padrino
+     public function padrino()
+     {
+         return $this->belongsTo(self::class, 'padrino_id');
+     }
+ 
+     // Relación para la madrina
+     public function madrina()
+     {
+         return $this->belongsTo(self::class, 'madrina_id');
+     } 
+
 }
 

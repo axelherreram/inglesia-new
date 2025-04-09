@@ -9,6 +9,7 @@ use App\Http\Controllers\ConfirmacionController;
 use App\Http\Controllers\CasamientoController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\PersonasController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,6 +33,10 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Rutas para la gestión de personas
+    Route::resource('personas', PersonasController::class)->except(['destroy']);
+
 
     // Rutas para bautizos
     Route::get('/dashboard-bautizo-create', [BautizoController::class, 'create'])->name('bautizos.create');
