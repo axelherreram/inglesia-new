@@ -34,8 +34,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Rutas para las personas
-    Route::resource('personas', PersonasController::class);
+    // Rutas para la gestión de personas
+    Route::resource('personas', PersonasController::class)->except(['destroy']);
 
 
     // Rutas para bautizos
