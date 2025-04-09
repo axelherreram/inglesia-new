@@ -14,7 +14,7 @@ class PersonasController extends Controller
     public function buscarPersonas(Request $request)
     {
         $search = $request->input('search');
-        $tipo = $request->input('tipo'); // Nuevo parámetro para el tipo de persona
+        $tipo = $request->input('tipo');
         $sexo = $request->input('sexo');
         $query = Persona::query();
 
@@ -26,20 +26,17 @@ class PersonasController extends Controller
             });
         }
 
-        // Filtrar por tipo de persona si se proporciona
         if ($tipo) {
             $query->where('tipo_persona', $tipo);
         }
-        // Filtrar por sexo
+
         if ($sexo) {
             $query->where('sexo', $sexo);
         }
 
-        $personas = $query->limit(10)->get();
+        $personas = $query->limit(10)->get(['persona_id', 'nombres', 'apellidos', 'dpi_cui']);
 
-        return response()->json([
-            'data' => $personas
-        ]);
+        return response()->json(['data' => $personas]);
     }
 
     // Mostrar todos los registros de personas
@@ -64,7 +61,7 @@ class PersonasController extends Controller
         // Obtener las personas filtradas
         $personas = $query->paginate(10);
 
-        return view('personas.index', compact('personas'));
+        return view('personas.index',['language' => 'es'], compact('personas') );
     }
 
 

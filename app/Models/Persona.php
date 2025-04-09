@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Persona extends Model
 {
     protected $table = 'personas';
+    protected $primaryKey = 'persona_id';
 
     protected $fillable = [
         'nombres',
@@ -28,6 +29,7 @@ class Persona extends Model
     {
         return $this->belongsTo(Municipio::class, 'municipio_id', 'municipio_id');
     }
+
      // Relación para el padre
      public function padre()
      {
@@ -51,4 +53,6 @@ class Persona extends Model
      {
          return $this->belongsTo(self::class, 'madrina_id');
      } 
+
 }
+
