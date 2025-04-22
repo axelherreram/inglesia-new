@@ -235,26 +235,29 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
                             data-bs-toggle="dropdown">
-                            <div class="parent-icon"> <img src="{{ asset('/assets/icon/bautismo.svg') }}"
-                                    class="logo-icon" alt="logo icon">
-                                </i>
+                            <div class="parent-icon">
+                                <img src="{{ asset('/assets/icon/bautismo.svg') }}" class="logo-icon" alt="logo icon">
                             </div>
                             <div class="menu-title d-flex align-items-center">Bautizos</div>
                             <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item " href="/dashboard-bautizo-create">
-                                    <i class="fadeIn animated bx bx-news"></i>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('bautizos.create') }}">
+                                    <i class="fadeIn animated bx bx-plus-circle"></i>
                                     Nuevo bautizo
                                 </a>
                             </li>
-                            <li><a class="dropdown-item " href="/dashboard-list-bautizo">
-                                    <i class='fadeIn animated bx bx-search-alt-2'></i>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('bautizos.index') }}">
+                                    <i class='fadeIn animated bx bx-list-ul'></i>
                                     Buscar bautizo
                                 </a>
                             </li>
                         </ul>
                     </li>
+
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
                             data-bs-toggle="dropdown">

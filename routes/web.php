@@ -39,12 +39,8 @@ Route::middleware(['auth'])->group(function () {
 
 
     // Rutas para bautizos
-    Route::get('/dashboard-bautizo-create', [BautizoController::class, 'create'])->name('bautizos.create');
-    Route::post('/bautizos', [BautizoController::class, 'store'])->name('bautizos.store');
+    Route::resource('bautizos', BautizoController::class);
     Route::get('/municipios/{departamento_id}', [BautizoController::class, 'getMunicipios']);
-    Route::get('/dashboard-list-bautizo', [BautizoController::class, 'index'])->name('bautizos.index');
-    Route::get('/bautizos/{bautizo_id}', [BautizoController::class, 'show'])->name('bautizos.show');
-    Route::put('/bautizos/{bautizo_id}', [BautizoController::class, 'update'])->name('bautizos.update');
     Route::get('/bautizo/{bautizo}/pdf', [BautizoController::class, 'generatePDF'])->name('bautizo.pdf');
 
     // Rutas para comuniones
