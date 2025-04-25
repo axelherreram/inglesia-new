@@ -10,6 +10,8 @@ use App\Http\Controllers\CasamientoController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\PersonasController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
