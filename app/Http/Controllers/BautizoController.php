@@ -175,62 +175,76 @@ class BautizoController extends Controller
 
         return redirect()->route('bautizos.index')->with('success', 'Bautizo guardado exitosamente.');
     }
-
-
-    /**
-     * Obtiene los municipios basados en el departamento seleccionado.
-     */
-    public function getMunicipios($departamento_id)
-    {
-        // Obtener los municipios relacionados con el departamento
-        $municipios = Municipio::where('departamento_id', $departamento_id)->get();
-
-        // Devolver los municipios como respuesta JSON
-        return response()->json($municipios);
-    }
-
     public function show($bautizo_id)
     {
-        $bautizo = Bautizo::findOrFail($bautizo_id);
-        $departamentos = Departamento::all(); // Para los selectores
+        $bautizo = Bautizo::with([
+            'personaBautizada',
+            'municipio',
+            'departamento',
+            'sacerdote',
+            'padre',
+            'madre',
+            'padrino',
+            'madrina'
+        ])->findOrFail($bautizo_id);
+
+        $departamentos = Departamento::all();
+
         return view('bautizos.show', compact('bautizo', 'departamentos'));
+    }
+    public function edit($bautizo_id)
+    {
+        $bautizo = Bautizo::with([
+            'personaBautizada',
+            'municipio',
+            'departamento',
+            'sacerdote',
+            'padre',
+            'madre',
+            'padrino',
+            'madrina'
+        ])->findOrFail($bautizo_id);
+
+        $departamentos = Departamento::all();
+        $municipios = Municipio::where('departamento_id', $bautizo->departamento_id)->get();
+
+        return view('bautizos.edit', compact('bautizo', 'departamentos', 'municipios'));
     }
     public function update(Request $request, $bautizo_id)
     {
-        // Validación de los datos
         $validatedData = $request->validate([
+            'persona_bautizada_id' => 'required|exists:personas,persona_id',
             'NoPartida' => 'required|string|max:20',
             'folio' => 'required|string|max:50',
             'fecha_bautizo' => 'required|date',
-            'nombre_persona_bautizada' => 'required|string|max:255',
-            'edad' => 'nullable|string|max:4',
-            'fecha_nacimiento' => 'nullable|date|before_or_equal:today',
             'aldea' => 'nullable|string|max:255',
             'municipio_id' => 'required|exists:municipio,municipio_id',
             'departamento_id' => 'required|exists:departamento,departamento_id',
-            'nombre_padre' => 'nullable|string|max:255',
-            'nombre_madre' => 'nullable|string|max:255',
-            'nombre_sacerdote' => 'nullable|string|max:255',
-            'nombre_padrino' => 'nullable|string|max:255',
-            'nombre_madrina' => 'nullable|string|max:255',
+            'sacerdote_id' => 'nullable|exists:personas,persona_id',
+            'padre_id' => 'nullable|exists:personas,persona_id',
+            'madre_id' => 'nullable|exists:personas,persona_id',
+            'padrino_id' => 'nullable|exists:personas,persona_id',
+            'madrina_id' => 'nullable|exists:personas,persona_id',
             'margen' => 'nullable|string|max:200',
-        ], [
-            'fecha_nacimiento.before_or_equal' => 'La fecha de nacimiento no puede ser mayor que la fecha actual.',
         ]);
 
-        // Buscar el bautizo y actualizarlo
         $bautizo = Bautizo::findOrFail($bautizo_id);
         $bautizo->update($validatedData);
-
         return redirect()->route('bautizos.index')->with('success', 'Bautizo actualizado exitosamente.');
     }
+
+
     public function generatePDF($bautizo_id)
     {
-        $bautizo = Bautizo::findOrFail($bautizo_id);
-
-        // Cargar la vista del PDF y pasar los datos
-        $pdf = PDF::loadView('pdf.bautizo', compact('bautizo'));
-
+        $bautizo = Bautizo::with(['personaBautizada', 'municipio', 'departamento', 'sacerdote', 'padre', 'madre', 'padrino', 'madrina'])->findOrFail($bautizo_id);
+        $pdf = PDF::loadView('bautizos.pdf', compact('bautizo'));
         return $pdf->stream('constancia-bautizo.pdf');
     }
+
+    public function getMunicipios($departamento_id)
+    {
+        $municipios = Municipio::where('departamento_id', $departamento_id)->get();
+        return response()->json($municipios);
+    }
+
 }
