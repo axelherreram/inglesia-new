@@ -9,54 +9,64 @@ class Bautizo extends Model
 {
     use HasFactory;
 
-    // Definir la tabla asociada
-    protected $table = 'bautizo';
-    protected $primaryKey = 'bautizo_id'; // Establece la clave primaria
+    protected $table = 'bautizo'; 
+    protected $primaryKey = 'bautizo_id';
+    public $timestamps = true; 
 
-    // Campos que pueden ser asignados de manera masiva
     protected $fillable = [
-        'dato_parroquia_id',
+        'persona_bautizada_id',
         'NoPartida',
         'folio',
         'fecha_bautizo',
-        'nombre_persona_bautizada',
-        'edad',
-        'fecha_nacimiento',
         'aldea',
         'municipio_id',
         'departamento_id',
-        'nombre_padre',
-        'nombre_madre',
-        'nombre_sacerdote',
-        'nombre_padrino',
-        'nombre_madrina',
+        'sacerdote_id',
         'margen',
+        'padre_id',
+        'madre_id',
+        'padrino_id',
+        'madrina_id',
     ];
 
-    // Definir el valor predeterminado de 'dato_parroquia_id'
-    protected $attributes = [
-        'dato_parroquia_id' => 1, // Valor fijo de 'dato_parroquia_id'
-    ];
-
-    protected $casts = [
-        'fecha_bautizo' => 'datetime',
-        'fecha_nacimiento' => 'datetime',
-    ];
-    // Relación con la tabla 'DatoGeneralParroquia'
-    public function parroquia()
+    // Relaciones
+    public function personaBautizada()
     {
-        return $this->belongsTo(DatoGeneralParroquia::class, 'dato_parroquia_id', 'dato_parroquia_id');
+        return $this->belongsTo(Persona::class, 'persona_bautizada_id');
     }
 
-    // Relación con la tabla 'Municipio'
     public function municipio()
     {
-        return $this->belongsTo(Municipio::class, 'municipio_id', 'municipio_id');
+        return $this->belongsTo(Municipio::class, 'municipio_id');
     }
 
-    // Relación con la tabla 'Departamento'
     public function departamento()
     {
-        return $this->belongsTo(Departamento::class, 'departamento_id', 'departamento_id');
+        return $this->belongsTo(Departamento::class, 'departamento_id');
+    }
+
+    public function sacerdote()
+    {
+        return $this->belongsTo(Persona::class, 'sacerdote_id');
+    }
+
+    public function padre()
+    {
+        return $this->belongsTo(Persona::class, 'padre_id');
+    }
+
+    public function madre()
+    {
+        return $this->belongsTo(Persona::class, 'madre_id');
+    }
+
+    public function padrino()
+    {
+        return $this->belongsTo(Persona::class, 'padrino_id');
+    }
+
+    public function madrina()
+    {
+        return $this->belongsTo(Persona::class, 'madrina_id');
     }
 }
