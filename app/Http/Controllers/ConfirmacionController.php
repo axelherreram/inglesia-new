@@ -208,15 +208,39 @@ class ConfirmacionController extends Controller
 
         return redirect()->route('confirmaciones.index')->with('success', 'Confirmación actualizada exitosamente.');
     }
-    
-
     public function generatePDF($confirmacion_id)
     {
-        $confirmacion = Confirmacion::findOrFail($confirmacion_id);
+        $confirmacion = Confirmacion::with([
+            'personaConfirmada',
+            'municipio',
+            'departamento',
+            'sacerdote',
+            'padre',
+            'madre',
+            'padrino',
+            'madrina'
+        ])->findOrFail($confirmacion_id);
 
-        // Cargar la vista del PDF y pasar los datos
-        $pdf = PDF::loadView('pdf.confirmacion', compact('confirmacion'));
-
+        $pdf = PDF::loadView('confirmaciones.pdf', compact('confirmacion'));
         return $pdf->stream('constancia-confirmacion.pdf');
+    }
+
+    public function edit($confirmacion_id)
+    {
+        $confirmacion = Confirmacion::with([
+            'personaConfirmada',
+            'municipio',
+            'departamento',
+            'sacerdote',
+            'padre',
+            'madre',
+            'padrino',
+            'madrina'
+        ])->findOrFail($confirmacion_id);
+
+        $departamentos = Departamento::all();
+        $municipios = Municipio::where('departamento_id', $confirmacion->departamento_id)->get();
+
+        return view('confirmaciones.edit', compact('confirmacion', 'departamentos', 'municipios'));
     }
 }
