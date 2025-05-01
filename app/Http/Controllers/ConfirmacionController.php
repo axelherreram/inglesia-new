@@ -15,26 +15,45 @@ class ConfirmacionController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request->input('nombre');
-        $year = $request->input('fecha_confirmacion');
+        $search = $request->input('search');
 
-        // Filtra por nombre y año si se proporcionan parámetros de búsqueda
-        $confirmaciones = Confirmacion::query()
-            ->when($search, function ($query, $search) {
-                return $query->where('nombre_persona_confirmada', 'like', "%{$search}%");
-            })
-            ->when($year, function ($query, $year) {
-                return $query->whereYear('fecha_confirmacion', $year);
-            })
-            ->paginate(10);
+        // Crear la consulta base con las relaciones
+        $query = Confirmacion::with([
+            'personaConfirmada',
+            'municipio',
+            'departamento',
+            'sacerdote',
+            'padre',
+            'madre',
+            'padrino',
+            'madrina'
+        ]);
 
-        // Verifica si no se encontraron resultados y añade mensaje a la sesión
+        if ($search) {
+            // Si el input es solo números, buscar por DPI/CUI
+            if (is_numeric($search)) {
+                $query->whereHas('personaConfirmada', function ($q) use ($search) {
+                    $q->where('dpi_cui', 'like', "%{$search}%");
+                });
+            } else {
+                // Buscar por nombre completo (nombre + apellido)
+                $query->whereHas('personaConfirmada', function ($q) use ($search) {
+                    $q->whereRaw("CONCAT(nombres, ' ', apellidos) LIKE ?", ['%' . $search . '%']);
+                });
+            }
+        }
+
+        // Paginación de los resultados
+        $confirmaciones = $query->paginate(10);
+
+        // Mensaje en caso de no encontrar registros
         if ($confirmaciones->isEmpty()) {
             session()->flash('no_results', 'No se encontraron registros de confirmaciones con los datos especificados.');
         } else {
             session()->forget('no_results');
         }
-        return view('list-confirmacion', compact('confirmaciones'));
+
+        return view('confirmaciones.index', compact('confirmaciones'));
     }
 
      /**
@@ -163,46 +182,33 @@ class ConfirmacionController extends Controller
 
         return view('confirmaciones.show', compact('confirmacion', 'departamentos'));
     }
-    
+
     /**
      * Actualiza un registro existente de confirmación en la base de datos.
      */
     public function update(Request $request, $confirmacion_id)
     {
-        // Validar los datos del formulario con las mismas reglas que el store
         $validatedData = $request->validate([
+            'persona_confirmada_id' => 'required|exists:personas,persona_id',
             'NoPartida' => 'required|string|max:20',
             'folio' => 'required|string|max:50',
             'fecha_confirmacion' => 'required|date',
-            'nombre_persona_confirmo' => 'required|string|max:255',
-            'nombre_persona_confirmada' => 'required|string|max:255',
-            'edad' => 'required|string|max:4',
             'nombre_parroquia_bautizo' => 'required|string|max:255',
             'municipio_id' => 'required|exists:municipio,municipio_id',
             'departamento_id' => 'required|exists:departamento,departamento_id',
-            'nombre_padre' => 'nullable|string|max:255',
-            'nombre_madre' => 'nullable|string|max:255',
-            'nombre_persona_padrino' => 'nullable|string|max:255',
-            'nombre_persona_madrina' => 'nullable|string|max:255',
-        ], [
-            'NoPartida.required' => 'El número de partida es obligatorio.',
-            'folio.required' => 'El folio es obligatorio.',
-            'fecha_confirmacion.required' => 'La fecha de la confirmación es obligatoria.',
-            'nombre_persona_confirmada.required' => 'El nombre de la persona confirmada es obligatorio.',
-            'edad.required' => 'La edad es obligatoria.',
-            'municipio_id.required' => 'El municipio es obligatorio.',
-            'departamento_id.required' => 'El departamento es obligatorio.',
+            'sacerdote_id' => 'required|exists:personas,persona_id',
+            'padre_id' => 'nullable|exists:personas,persona_id',
+            'madre_id' => 'nullable|exists:personas,persona_id',
+            'padrino_id' => 'nullable|exists:personas,persona_id',
+            'madrina_id' => 'nullable|exists:personas,persona_id',
         ]);
 
-        // Buscar la confirmación por ID
         $confirmacion = Confirmacion::findOrFail($confirmacion_id);
-
-        // Actualizar los datos de la confirmación con los valores validados
         $confirmacion->update($validatedData);
 
-        // Redirigir al listado de confirmaciones con un mensaje de éxito
         return redirect()->route('confirmaciones.index')->with('success', 'Confirmación actualizada exitosamente.');
     }
+    
 
     public function generatePDF($confirmacion_id)
     {
