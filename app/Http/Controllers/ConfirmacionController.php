@@ -48,7 +48,7 @@ class ConfirmacionController extends Controller
 
         // Mensaje en caso de no encontrar registros
         if ($confirmaciones->isEmpty()) {
-            session()->flash('no_results', 'No se encontraron registros de confirmaciones con los datos especificados.');
+            session()->flash('no_results', 'No se encontraron registros de confirmaciones con los datos proporcionados.');
         } else {
             session()->forget('no_results');
         }
@@ -56,7 +56,8 @@ class ConfirmacionController extends Controller
         return view('confirmaciones.index', compact('confirmaciones'));
     }
 
-     /**
+
+    /**
      * Muestra el formulario para crear una nueva confirmación.
      */
     public function create(Request $request)
@@ -73,7 +74,8 @@ class ConfirmacionController extends Controller
         return view('confirmaciones.create', compact('departamentos', 'municipios'));
     }
 
-     /**
+
+    /**
      * Almacena una nueva confirmación en la base de datos.
      */
     public function store(Request $request)
@@ -122,7 +124,7 @@ class ConfirmacionController extends Controller
         $confirmacionExistente = Confirmacion::where('persona_confirmada_id', $request->persona_confirmada_id)->first();
         if ($confirmacionExistente) {
             return redirect()->back()->withErrors([
-                'persona_confirmada_id' => 'Esta persona ya ha sido confirmada previamente.',
+                'persona_confirmada_id' => 'La persona indicada ya ha sido confirmada previamente.',
             ]);
         }
 
@@ -162,7 +164,6 @@ class ConfirmacionController extends Controller
         // Devolver los municipios como respuesta JSON
         return response()->json($municipios);
     }
-
 
     // Método para mostrar el detalle de una confirmación
     public function show($confirmacion_id)
