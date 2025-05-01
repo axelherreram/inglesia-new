@@ -99,6 +99,13 @@ class ConfirmacionController extends Controller
             'madrina_id.exists' => 'La madrina no existe.',
         ]);
 
+        // Verificar si ya existe una confirmación para la persona confirmada
+        $confirmacionExistente = Confirmacion::where('persona_confirmada_id', $request->persona_confirmada_id)->first();
+        if ($confirmacionExistente) {
+            return redirect()->back()->withErrors([
+                'persona_confirmada_id' => 'Esta persona ya ha sido confirmada previamente.',
+            ]);
+        }
 
         // Validación personalizada para evitar que una misma persona ocupe varios roles
         $personaIds = [
@@ -137,18 +144,26 @@ class ConfirmacionController extends Controller
         return response()->json($municipios);
     }
 
-    
+
     // Método para mostrar el detalle de una confirmación
     public function show($confirmacion_id)
     {
-        // Buscar la confirmación por su ID
-        $confirmacion = Confirmacion::findOrFail($confirmacion_id);
-        // Obtener todos los departamentos para el selector
-        $departamentos = Departamento::all();
-        // Retornar la vista con los detalles de la confirmación
-        return view('confirmacion.confirmacion-show', compact('confirmacion', 'departamentos'));
-    }
+        $confirmacion = Confirmacion::with([
+            'personaConfirmada',
+            'municipio',
+            'departamento',
+            'sacerdote',
+            'padre',
+            'madre',
+            'padrino',
+            'madrina'
+        ])->findOrFail($confirmacion_id);
 
+        $departamentos = Departamento::all();
+
+        return view('confirmaciones.show', compact('confirmacion', 'departamentos'));
+    }
+    
     /**
      * Actualiza un registro existente de confirmación en la base de datos.
      */
