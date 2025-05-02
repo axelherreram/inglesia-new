@@ -56,19 +56,9 @@ Route::middleware(['auth'])->group(function () {
 
 
     // Rutas para confirmaciones
-    // Route::get('/dashboard-list-confirmacion', [ConfirmacionController::class, 'index'])->name('confirmaciones.index');
-    // Route::get('/dashboard-confirmacion-create', [ConfirmacionController::class, 'create'])->name('confirmaciones.create');
-    // Route::post('/confirmaciones', [ConfirmacionController::class, 'store'])->name('confirmaciones.store');
-    // Route::get('/confirmaciones/{confirmacion_id}', [ConfirmacionController::class, 'show'])->name('confirmaciones.show');
-    // Route::put('/confirmaciones/{confirmacion_id}', [ConfirmacionController::class, 'update'])->name('confirmaciones.update');
-    // Route::get('/confirmacion/{confirmacion}/pdf', [ConfirmacionController::class, 'generatePDF'])->name('confirmacion.pdf');
-    Route::get('/confirmaciones', [ConfirmacionController::class, 'index'])->name('confirmaciones.index');
-    Route::get('/confirmaciones/create', [ConfirmacionController::class, 'create'])->name('confirmaciones.create');
-    Route::post('/confirmaciones', [ConfirmacionController::class, 'store'])->name('confirmaciones.store');
-    Route::get('/confirmaciones/{confirmacion}', [ConfirmacionController::class, 'show'])->name('confirmaciones.show');
-    Route::get('/confirmaciones/{confirmacion}/edit', [ConfirmacionController::class, 'edit'])->name('confirmaciones.edit');
-    Route::put('/confirmaciones/{confirmacion}', [ConfirmacionController::class, 'update'])->name('confirmaciones.update');
-    Route::get('/confirmaciones/{confirmacion}/pdf', [ConfirmacionController::class, 'generatePDF'])->name('confirmaciones.pdf');    
+    Route::resource('confirmaciones', ConfirmacionController::class);
+    Route::get('/municipios/{departamento_id}', [ConfirmacionController::class, 'getMunicipios']);
+    Route::get('/confirmaciones/{confirmacion}/pdf', [ConfirmacionController::class, 'generatePDF'])->name('confirmaciones.pdf');
 
     // Rutas para casamientos
     Route::get('/dashboard-casamiento-create', [CasamientoController::class, 'create'])->name('casamientos.create');
