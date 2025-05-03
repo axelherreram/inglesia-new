@@ -46,22 +46,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/bautizo/{bautizo}/pdf', [BautizoController::class, 'generatePDF'])->name('bautizo.pdf');
 
     // Rutas para comuniones
-    Route::get('/dashboard-comunion-create', [ComunionController::class, 'create'])->name('comuniones.create');
-    Route::post('/comuniones', [ComunionController::class, 'store'])->name('comuniones.store');
-    Route::get('/dashboard-list-comunion', [ComunionController::class, 'index'])->name('comuniones.index');
-    Route::get('/comuniones/{comunion_id}', [ComunionController::class, 'show'])->name('comuniones.show');
-    Route::put('/comuniones/{comunion_id}', [ComunionController::class, 'update'])->name('comuniones.update'); 
+    Route::resource('comuniones', ComunionController::class);
     Route::get('/municipios/{departamento_id}', [ComunionController::class, 'getMunicipios']);
-    Route::get('/comunion/{comunion}/pdf', [ComunionController::class, 'generatePDF'])->name('comunion.pdf');
+    Route::get('/comuniones/{comunion}/pdf', [ComunionController::class, 'generatePDF'])->name('comuniones.pdf');
 
 
     // Rutas para confirmaciones
-    Route::get('/dashboard-list-confirmacion', [ConfirmacionController::class, 'index'])->name('confirmaciones.index');
-    Route::get('/dashboard-confirmacion-create', [ConfirmacionController::class, 'create'])->name('confirmaciones.create');
-    Route::post('/confirmaciones', [ConfirmacionController::class, 'store'])->name('confirmaciones.store');
-    Route::get('/confirmaciones/{confirmacion_id}', [ConfirmacionController::class, 'show'])->name('confirmaciones.show');
-    Route::put('/confirmaciones/{confirmacion_id}', [ConfirmacionController::class, 'update'])->name('confirmaciones.update');
-    Route::get('/confirmacion/{confirmacion}/pdf', [ConfirmacionController::class, 'generatePDF'])->name('confirmacion.pdf');
+    Route::resource('confirmaciones', ConfirmacionController::class);
+    Route::get('/municipios/{departamento_id}', [ConfirmacionController::class, 'getMunicipios']);
+    Route::get('/confirmaciones/{confirmacion}/pdf', [ConfirmacionController::class, 'generatePDF'])->name('confirmaciones.pdf');
 
     // Rutas para casamientos
     Route::get('/dashboard-casamiento-create', [CasamientoController::class, 'create'])->name('casamientos.create');
