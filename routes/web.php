@@ -46,13 +46,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/bautizo/{bautizo}/pdf', [BautizoController::class, 'generatePDF'])->name('bautizo.pdf');
 
     // Rutas para comuniones
-    Route::get('/dashboard-comunion-create', [ComunionController::class, 'create'])->name('comuniones.create');
-    Route::post('/comuniones', [ComunionController::class, 'store'])->name('comuniones.store');
-    Route::get('/dashboard-list-comunion', [ComunionController::class, 'index'])->name('comuniones.index');
-    Route::get('/comuniones/{comunion_id}', [ComunionController::class, 'show'])->name('comuniones.show');
-    Route::put('/comuniones/{comunion_id}', [ComunionController::class, 'update'])->name('comuniones.update');
+    Route::resource('comuniones', ComunionController::class);
     Route::get('/municipios/{departamento_id}', [ComunionController::class, 'getMunicipios']);
-    Route::get('/comunion/{comunion}/pdf', [ComunionController::class, 'generatePDF'])->name('comunion.pdf');
+    Route::get('/comuniones/{comunion}/pdf', [ComunionController::class, 'generatePDF'])->name('comuniones.pdf');
 
 
     // Rutas para confirmaciones

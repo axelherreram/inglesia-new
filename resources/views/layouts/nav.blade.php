@@ -261,23 +261,22 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
                             data-bs-toggle="dropdown">
-                            <div class="parent-icon"> <img src="{{ asset('/assets/icon/comunion.svg') }}"
-                                    class="logo-icon" alt="logo icon" style="height: 50px">
-                                </i>
+                            <div class="parent-icon">
+                                <img src="{{ asset('/assets/icon/comunion.svg') }}" class="logo-icon" alt="logo icon">
                             </div>
                             <div class="menu-title d-flex align-items-center">Comunión</div>
                             <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item m-0" href="/dashboard-comunion-create">
-                                    <i class="fadeIn animated bx bx-news"></i>
+                                <a class="dropdown-item" href="{{ route('comuniones.create') }}">
+                                    <i class="fadeIn animated bx bx-plus-circle"></i>
                                     Nueva comunión
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item " href="/dashboard-list-comunion">
-                                    <i class='fadeIn animated bx bx-search-alt-2'></i>
+                                <a class="dropdown-item" href="{{ route('comuniones.index') }}">
+                                    <i class='fadeIn animated bx bx-list-ul'></i>
                                     Buscar Comunión
                                 </a>
                             </li>
