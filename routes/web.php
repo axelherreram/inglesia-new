@@ -10,8 +10,9 @@ use App\Http\Controllers\CasamientoController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\PersonasController;
-
-
+use App\Http\Controllers\MunicipioController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,24 +37,24 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Rutas para la gestión de personas
+    // Rutas para la gestión de usuarios
     Route::resource('personas', PersonasController::class)->except(['destroy']);
+    Route::get('/personas/buscar', [PersonasController::class, 'buscarPersonas'])->name('personas.buscar');
 
+    // routes/web.php
+    // Rutas para la gestión de 
 
+    Route::get('/municipios/{departamento_id}', [MunicipioController::class, 'getMunicipios']);
     // Rutas para bautizos
+
     Route::resource('bautizos', BautizoController::class);
     Route::get('/municipios/{departamento_id}', [BautizoController::class, 'getMunicipios']);
     Route::get('/bautizo/{bautizo}/pdf', [BautizoController::class, 'generatePDF'])->name('bautizo.pdf');
 
     // Rutas para comuniones
-    Route::get('/dashboard-comunion-create', [ComunionController::class, 'create'])->name('comuniones.create');
-    Route::post('/comuniones', [ComunionController::class, 'store'])->name('comuniones.store');
-    Route::get('/dashboard-list-comunion', [ComunionController::class, 'index'])->name('comuniones.index');
-    Route::get('/comuniones/{comunion_id}', [ComunionController::class, 'show'])->name('comuniones.show');
-    Route::put('/comuniones/{comunion_id}', [ComunionController::class, 'update'])->name('comuniones.update');
+    Route::resource('comuniones', ComunionController::class);
     Route::get('/municipios/{departamento_id}', [ComunionController::class, 'getMunicipios']);
-    Route::get('/comunion/{comunion}/pdf', [ComunionController::class, 'generatePDF'])->name('comunion.pdf');
-
+    Route::get('/comuniones/{comunion}/pdf', [ComunionController::class, 'generatePDF'])->name('comuniones.pdf');
 
     // Rutas para confirmaciones
     Route::resource('confirmaciones', ConfirmacionController::class);
@@ -61,22 +62,24 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/confirmaciones/{confirmacion}/pdf', [ConfirmacionController::class, 'generatePDF'])->name('confirmaciones.pdf');
 
     // Rutas para casamientos
-    Route::get('/dashboard-casamiento-create', [CasamientoController::class, 'create'])->name('casamientos.create');
-    Route::post('/casamientos', [CasamientoController::class, 'store'])->name('casamientos.store');
-    Route::get('/dashboard-list-casamiento', [CasamientoController::class, 'index'])->name('casamientos.index');
-    Route::get('/casamientos/{casamiento_id}', [CasamientoController::class, 'show'])->name('casamientos.show');
-    Route::put('/casamientos/{casamiento_id}', [CasamientoController::class, 'update'])->name('casamientos.update');
-    Route::get('/casamiento/{casamiento}/pdf', [CasamientoController::class, 'generatePDF'])->name('casamiento.pdf');
+    Route::resource('casamientos', CasamientoController::class);
+    Route::get('/casamientos/{casamiento_id}/pdf', [CasamientoController::class, 'generatePDF'])->name('casamientos.pdf');
+    // Ruta para eliminar un testigo
+    Route::delete('/casamientos/testigos/{testigo_id}', [CasamientoController::class, 'destroy'])
+        ->name('casamientos.testigos.destroy');
 
     // Rutas para el perfil de usuario
     Route::get('/user-profile', [UserProfileController::class, 'show'])->name('user.profile');
     Route::put('/user-profile', [UserProfileController::class, 'update'])->name('user.update');
+    Route::put('/user-profile/change-password', [UserProfileController::class, 'changePassword'])->name('user.changePassword');
 });
 
-// Rutas para errores y autenticación adicional
-Route::get('/auth-basic-forgot-password', function () {
-    return view('auth-basic-forgot-password');
-});
+
+Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::post('/password/reset', [ResetPasswordController::class, 'reset']);
+Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 
 Route::get('/errors-404-error', function () {
     return view('errors-404-error');
