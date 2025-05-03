@@ -1,0 +1,9 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home2/parroq40/newVersión/
+    - rsync -avz --delete \
+        --exclude=".git" \
+        --exclude="node_modules" \
+        --exclude=".env" \
+        ./ $DEPLOYPATH
