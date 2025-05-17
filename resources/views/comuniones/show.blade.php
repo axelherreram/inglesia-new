@@ -15,14 +15,14 @@
                     </a>
                 </div>
                 <h2 class="persona-title mt-4" style="color: white">Registro de Primera Comunión</h2>
-                <p class="persona-subtitle">Partida: {{ $comunion->NoPartida }} • Folio: {{ $comunion->folio }}</p>
+                <p class="persona-subtitle">No. Libro: {{ $comunion->NoPartida }} • Folio: {{ $comunion->folio }}</p>
             </div>
 
             <div class="info-section">
                 <h3 class="section-title">Información de la Comunión</h3>
                 <div class="info-grid">
                     <div class="info-item">
-                        <span class="info-label">Partida No:</span>
+                        <span class="info-label">No. Libro:</span>
                         <div class="info-value">{{ $comunion->NoPartida }}</div>
                     </div>
                     <div class="info-item">
