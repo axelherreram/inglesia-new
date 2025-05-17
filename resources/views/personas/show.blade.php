@@ -225,8 +225,19 @@
                         </div>
                         <div class="info-item">
                             <span class="info-label">Tipo de Persona:</span>
-                            <div class="info-value">{{ $persona->tipo_persona }}</div>
+                            <div class="info-value">
+                                @if($persona->tipo_persona == 'F')
+                                    Feligrés
+                                @elseif($persona->tipo_persona == 'S')
+                                    Sacerdote
+                                @elseif($persona->tipo_persona == 'O')
+                                    Obispo
+                                @else
+                                    Desconocido
+                                @endif
+                            </div>
                         </div>
+
                         <div class="info-item">
                             <span class="info-label">Dirección:</span>
                             <div class="info-value">{{ $persona->direccion ?? 'No disponible' }}</div>
