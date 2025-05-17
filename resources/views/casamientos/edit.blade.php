@@ -32,7 +32,7 @@
                         </a>
                     </div>
                     <h2 class="persona-title mt-4" style="color: white">Editar Registro de Casamiento</h2>
-                    <p class="persona-subtitle">Partida: {{ $casamiento->NoPartida }} • Folio: {{ $casamiento->folio }}</p>
+                    <p class="persona-subtitle">No. Libro: {{ $casamiento->NoPartida }} • Folio: {{ $casamiento->folio }}</p>
                 </div>
 
                 <div class="info-section">
@@ -45,7 +45,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="NoPartida" class="form-label required-field">Partida No:</label>
+                                    <label for="NoPartida" class="form-label required-field">No. Libro:</label>
                                     <div class="input-icon">
                                         <i class="lni lni-ticket"></i>
                                         <input type="text" class="form-control" id="NoPartida" name="NoPartida"

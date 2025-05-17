@@ -12,14 +12,14 @@
                         </a>
                     </div>
                     <h2 class="persona-title mt-4" style="color: white;">Registro de Casamiento</h2>
-                    <p class="persona-subtitle">Partida: {{ $casamiento->NoPartida }} • Folio: {{ $casamiento->folio }}</p>
+                    <p class="persona-subtitle">No. Libro: {{ $casamiento->NoPartida }} • Folio: {{ $casamiento->folio }}</p>
                 </div>
 
                 <div class="info-section">
                     <h3 class="section-title">Información del Casamiento</h3>
                     <div class="info-grid">
                         <div class="info-item">
-                            <span class="info-label">Partida No:</span>
+                            <span class="info-label">No. Libro:</span>
                             <div class="info-value">{{ $casamiento->NoPartida }}</div>
                         </div>
                         <div class="info-item">
