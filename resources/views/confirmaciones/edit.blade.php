@@ -13,7 +13,7 @@
                     </a>
                 </div>
                 <h2 class="persona-title mt-4" style="color: white">Editar Registro de Confirmación</h2>
-                <p class="persona-subtitle">Partida: {{ $confirmacion->NoPartida }} • Folio: {{ $confirmacion->folio }}</p>
+                <p class="persona-subtitle">No. Libro: {{ $confirmacion->NoPartida }} • Folio: {{ $confirmacion->folio }}</p>
             </div>
 
             <div class="info-section">
@@ -25,7 +25,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="NoPartida" class="form-label required-field">Partida No:</label>
+                                <label for="NoPartida" class="form-label required-field">No. Libro:</label>
                                 <div class="input-icon">
                                     <i class="lni lni-ticket"></i>
                                     <input type="text" class="form-control" id="NoPartida" name="NoPartida" 
@@ -289,15 +289,12 @@
                         </div>
                     </div>
 
-                    <!-- Botones de acción -->
                     <div class="action-buttons">
-                        <a href="{{ route('confirmaciones.show', $confirmacion->confirmacion_id) }}" class="cancel-button">
-                            <i class="lni lni-close"></i> Cancelar
-                        </a>
-                        <button type="button" id="submit-btn" class="save-button">
+                        <button type="button" id="submit-btn" class="submit-button">
                             <i class="lni lni-save"></i> Guardar Cambios
                         </button>
                     </div>
+
                 </form>
             </div>
         </div>

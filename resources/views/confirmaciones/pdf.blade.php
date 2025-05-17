@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Constancia de Confirmación</title>
     <link rel="stylesheet" href="{{ public_path('assets/css/font.css') }}">
-
-
     <style>
         body {
             font-family: 'Times New Roman', Times, serif;
@@ -38,20 +36,9 @@
             margin-bottom: 20px;
         }
 
-        h2,
-        .form-group label {
-            color: #3d69a8;
-
-        }
-
         h2 {
             font-family: 'Dexterous', Times, serif !important;
-        }
-
-        .form-group label {
-            font-weight: 500;
             color: #3d69a8;
-            font-size: 1.1rem;
         }
 
         .subtitle {
@@ -73,47 +60,43 @@
             display: inline-block;
         }
 
-        .form-content,
-        .form-group span {
+        .azul-parrafo {
+            color: #3d69a8;
+            text-align: justify;
             font-size: 1.2rem;
-            line-height: 1.6;
-            /* Ajuste del interlineado */
+            line-height: 1.8;
         }
 
-        .form-group {
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            /* Alineación vertical de los elementos del formulario */
+        .azul-parrafo .dato {
+            color: #000;
+            font-weight: normal;
         }
 
         .form-group.date-group {
-            justify-content: space-evenly;
-        }
-
-        .signature-line-l {
-            position: absolute;
-            right: 40px;
-            width: 350px;
-            margin-top: 90px !important;
+            font-size: 1.1rem;
+            margin-top: 35px;
             color: #3d69a8;
-            text-align: right;
+            text-align: center;
         }
 
-        .signature-line-l hr {
-            width: 100%;
+        .form-group.date-group .dato {
+            color: #000;
+        }
+
+        .signature-line {
+            text-align: center;
+            margin-top: 80px;
+            color: #3d69a8;
+        }
+
+        .signature-line hr {
+            width: 200px;
+            margin: 0 auto 5px auto;
             border-top: 1px solid #3d69a8;
         }
 
-        .signature-line-l p {
-            margin-top: 0px;
-            margin-right: 150px;
-        }
-
-
-        .text-center {
-            text-align: center;
+        .signature-line p {
+            margin: 0;
         }
 
         img.logo {
@@ -132,25 +115,16 @@
         img.logo.right {
             right: 10px;
             height: 220px;
-
         }
 
         img.logo.cruzz {
             right: 10px;
             left: 10px;
             height: 220px;
-
         }
 
-        span {
-            text-decoration: underline;
-        }
-
-        img.test-image {
-            display: block;
-            margin: 20px auto;
-            width: 100%;
-            height: auto;
+        .text-center {
+            text-align: center;
         }
 
         .h2 {
@@ -166,89 +140,59 @@
     <div class="certificate">
         <img src="{{ public_path('assets/img/logo_parroquia.png') }}" alt="Logo Parroquia" class="logo left">
         <img src="{{ public_path('assets/img/Mercedes.png') }}" alt="Mercedes" class="logo right">
-        <img src="{{ public_path('assets/img/Cruz.png') }}" alt="Mercedes" class="logo cruzz">
+        <img src="{{ public_path('assets/img/Cruz.png') }}" alt="Cruz" class="logo cruzz">
 
         <div class="header">
-            <span class="h2">Parroquia Nuestra Señora de Las Mercedes</span>
+            <h2>Parroquia Nuestra Señora de Las Mercedes</h2>
             <p class="subtitle">Diócesis de Jalapa</p>
             <p class="subtitle">Calle al Calvario, Barrio el Centro, Sanarate, El Progreso</p>
             <div class="title">CONSTANCIA DE CONFIRMACIÓN</div>
         </div>
 
-        <div class="form-content">
-            <div class="form-group" style="width: 20cm;">
-                <label for="parroco">El infrascrito, Párroco de:</label>
-                <span>{{ $confirmacion->nombre_parroquia_bautizo }}</span>
-            </div>
+            <div class="form-content">
+        <!-- Línea justificada: Párroco -->
+        <p class="azul-parrafo" style="margin-bottom: 0;">
+            El infrascrito, Párroco de <span class="dato">{{ $confirmacion->nombre_parroquia_bautizo }}</span>,
+        </p>
 
-            <p class="text-center" style="font-weight: 500; color: #3d6aa8de; font-size: 1.1rem;">
-                Certifica que en el libro de Confirmaciones:
-            </p>
+        <!-- Línea centrada: Certificación -->
+        <p class="text-center azul-parrafo" style="margin-top: 0;">
+            Certifica que en el libro de Confirmaciones:
+        </p>
 
-            <div class="form-group">
-                <label for="libro">No.:</label>
-                <span>{{ $confirmacion->NoPartida }}</span>
-                <label for="folio" style="margin-left: 10px;">Folio:</label>
-                <span>{{ $confirmacion->folio }}</span>
-                <label style="margin-left: 10px;">de esta Parroquia consta que:</label>
-            </div>
+        <!-- Párrafo narrativo unificado -->
+        <p class="azul-parrafo">
+            No.: <span class="dato">{{ $confirmacion->NoPartida }}</span>, Folio: <span class="dato">{{ $confirmacion->folio }}</span> de esta Parroquia consta que 
+            <span class="dato">{{ $confirmacion->personaConfirmada->nombres }} {{ $confirmacion->personaConfirmada->apellidos }}</span>,
+            hijo de <span class="dato">{{ $confirmacion->padre?->nombres ?? '' }} {{ $confirmacion->padre?->apellidos ?? '' }}</span> y 
+            <span class="dato">{{ $confirmacion->madre?->nombres ?? '' }} {{ $confirmacion->madre?->apellidos ?? '' }}</span>, nacido el 
+            <span class="dato">{{ \Carbon\Carbon::parse($confirmacion->personaConfirmada->fecha_nacimiento)->locale('es')->isoFormat('D') }}</span> de 
+            <span class="dato">{{ \Carbon\Carbon::parse($confirmacion->personaConfirmada->fecha_nacimiento)->locale('es')->isoFormat('MMMM') }}</span> del año 
+            <span class="dato">{{ \Carbon\Carbon::parse($confirmacion->personaConfirmada->fecha_nacimiento)->locale('es')->isoFormat('Y') }}</span>,
+            fue confirmado el día <span class="dato">{{ \Carbon\Carbon::parse($confirmacion->fecha_confirmacion)->format('d') }}</span> en 
+            <span class="dato">{{ $confirmacion->nombre_parroquia_bautizo }}</span> por el Excmo. Monseñor 
+            <span class="dato">{{ $confirmacion->sacerdote->nombres }} {{ $confirmacion->sacerdote->apellidos }}</span>.
+        </p>
 
-            <div class="form-group">
-                <span>{{ $confirmacion->personaConfirmada->nombres }}
-                    {{ $confirmacion->personaConfirmada->apellidos }}</span>
-            </div>
+        <p class="azul-parrafo">
+            Habiendo sido padrino y madrina: 
+            <span class="dato">{{ $confirmacion->padrino?->nombres ?? '' }} {{ $confirmacion->padrino?->apellidos ?? '' }}</span> y 
+            <span class="dato">{{ $confirmacion->madrina?->nombres ?? '' }} {{ $confirmacion->madrina?->apellidos ?? '' }}</span>.
+        </p>
 
-            <div class="form-group">
-                <label for="padre">Hijo de</label>
-                <span>{{ $confirmacion->padre?->nombres ?? ' ' }} {{ $confirmacion->padre?->apellidos ?? '' }}</span>
-            </div>
-            <div class="form-group">
-                <label for="">y de</label>
-                <span>{{ $confirmacion->madre?->nombres ?? ' ' }} {{ $confirmacion->madre?->apellidos ?? '' }}</span>
-            </div>
-
-            <div class="form-group">
-                <label for="nacido">Nacido el</label>
-                <span>{{ \Carbon\Carbon::parse($confirmacion->personaConfirmada->fecha_nacimiento)->locale('es')->isoFormat('D') }}</span>
-                <label for="mes" style="margin-left: 5px;">de</label>
-                <span>{{ \Carbon\Carbon::parse($confirmacion->personaConfirmada->fecha_nacimiento)->locale('es')->isoFormat('MMMM') }}</span>
-                <label for="ano" style="margin-left: 5px;">del año</label>
-                <span>{{ \Carbon\Carbon::parse($confirmacion->personaConfirmada->fecha_nacimiento)->locale('es')->isoFormat('Y') }}</span>
-            </div>
-
-
-            <div class="form-group">
-                <label for="confirmado">Fue confirmado el</label>
-                <span>{{ \Carbon\Carbon::parse($confirmacion->fecha_confirmacion)->format('d') }}</span>
-                <label for="lugarConf">en</label>
-                <span>{{ $confirmacion->nombre_parroquia_bautizo }}</span>
-            </div>
-
-            <div class="form-group">
-                <label for="padre">Por el Excmo. Monseñor</label>
-                <span>{{ $confirmacion->sacerdote->nombres }} {{ $confirmacion->sacerdote->apellidos }}</span>
-            </div>
-
-            <div class="form-group">
-                <label for="adrin">Habiendo sido padrino y madrina:</label>
-                <span>
-                    {{ $confirmacion->padrino?->nombres ?? ' ' }} {{ $confirmacion->padrino?->apellidos ?? '' }}
-                    y
-                    {{ $confirmacion->madrina?->nombres ?? ' ' }} {{ $confirmacion->madrina?->apellidos ?? '' }}
-                </span>
-            </div>
-
-            <div class="form-group date-group" style="margin-top: 50px ;">
-                <span class="day">{{ now()->format('d') }}</span>
-                <label>. de </label>
-                <span class="month">{{ now()->locale('es')->isoFormat('MMMM') }}</span>
-                <label>. de </label>
-                <span class="year">{{ now()->format('Y') }}</span>
-            </div>
+        <div class="form-group date-group">
+            <span class="dato">{{ now()->format('d') }}</span>
+            <span>. de </span>
+            <span class="dato">{{ now()->locale('es')->isoFormat('MMMM') }}</span>
+            <span>. de </span>
+            <span class="dato">{{ now()->format('Y') }}</span>
         </div>
-        <div class="signature-line-l">
+    </div>
+
+
+        <div class="signature-line">
             <hr>
-            <p><strong>Parroco</strong></p>
+            <p><strong>Párroco</strong></p>
         </div>
     </div>
 </body>
