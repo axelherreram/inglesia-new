@@ -8,7 +8,7 @@ class CreateBautizoTable extends Migration
 {
     public function up()
     {
-        Schema::create('bautizo', function (Blueprint $table) {
+        Schema::create('bautizos', function (Blueprint $table) {
             $table->increments('bautizo_id')->unsigned();
             $table->integer('persona_bautizada_id')->unsigned();
             $table->string('NoPartida', 20);
