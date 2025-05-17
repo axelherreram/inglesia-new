@@ -25,7 +25,7 @@
                             
                             <div class="row mb-3">
                                 <div class="col-md-4">
-                                    <label for="NoPartida" class="form-label required-field">Partida No:</label>
+                                    <label for="NoPartida" class="form-label required-field">No. Libro:</label>
                                     <div class="input-icon">
                                         <i class="lni lni-ticket"></i>
                                         <input type="text" class="form-control" id="NoPartida" name="NoPartida"

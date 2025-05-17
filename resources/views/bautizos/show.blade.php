@@ -11,14 +11,14 @@
                     </a>
                 </div>
                 <h2 class="persona-title mt-4" style="color: white">Registro de Bautizo</h2>
-                <p class="persona-subtitle">Partida: {{ $bautizo->NoPartida }} • Folio: {{ $bautizo->folio }}</p>
+                <p class="persona-subtitle">No. Libro: {{ $bautizo->NoPartida }} • Folio: {{ $bautizo->folio }}</p>
             </div>
 
             <div class="info-section">
                 <h3 class="section-title">Información del Bautizo</h3>
                 <div class="info-grid">
                     <div class="info-item">
-                        <span class="info-label">Partida No:</span>
+                        <span class="info-label">No. Libro:</span>
                         <div class="info-value">{{ $bautizo->NoPartida }}</div>
                     </div>
                     <div class="info-item">
