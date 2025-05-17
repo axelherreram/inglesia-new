@@ -194,14 +194,12 @@
         <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
             aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header border-bottom">
-                <a href="{{ route('dashboard') }}" class="d-flex align-items-center">
-                    <div class="">
-                        <img src="{{ asset('/assets/icon/iglesia.png') }}" class="logo-icon" alt="logo icon">
-                    </div>
-                    <div class="">
-                        <h4 class="logo-text fw-bold">Iglesia Sansare</h4>
+                <a href="{{ route('dashboard') }}" class="d-flex align-items-center text-decoration-none gap-2 p-2">
+                    <div class="d-flex align-items-center justify-content-center bg-light p-2 shadow-sm">
+                        <img src="{{ asset('/assets/icon/icono-iglesia.svg') }}" width="250" alt="logo icon" >
                     </div>
                 </a>
+
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
@@ -230,7 +228,6 @@
                             </li>
                         </ul>
                     </li>
-
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
@@ -282,6 +279,7 @@
                             </li>
                         </ul>
                     </li>
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
                             data-bs-toggle="dropdown">
@@ -312,22 +310,21 @@
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
                             data-bs-toggle="dropdown">
                             <div class="parent-icon">
-                                <img src="{{ asset('/assets/icon/casamiento.svg') }} " class="logo-icon" alt="logo icon"
-                                    style="width: 50px">
+                                <img src="{{ asset('/assets/icon/casamiento.svg') }}" class="logo-icon" alt="logo icon">
                             </div>
                             <div class="menu-title d-flex align-items-center">Casamientos</div>
                             <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item m-0" href="/dashboard-casamiento-create">
-                                    <i class="fadeIn animated bx bx-news"></i>
+                                <a class="dropdown-item" href="{{ route('casamientos.create') }}">
+                                    <i class="fadeIn animated bx bx-plus-circle"></i>
                                     Nuevo casamiento
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item " href="/dashboard-list-casamiento">
-                                    <i class='fadeIn animated bx bx-search-alt-2'></i>
+                                <a class="dropdown-item" href="{{ route('casamientos.index') }}">
+                                    <i class='fadeIn animated bx bx-list-ul'></i>
                                     Buscar Casamientos
                                 </a>
                             </li>
@@ -335,6 +332,7 @@
                     </li>
                 </ul>
             </div>
+
         </div>
     </nav>
 </div>

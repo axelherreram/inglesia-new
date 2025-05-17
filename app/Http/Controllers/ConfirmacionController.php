@@ -48,7 +48,7 @@ class ConfirmacionController extends Controller
 
         // Mensaje en caso de no encontrar registros
         if ($confirmaciones->isEmpty()) {
-            session()->flash('no_results', 'No se encontraron registros de confirmaciones con los datos proporcionados.');
+            session()->flash('no_results', 'No se encontraron registros de confirmaciones con los datos especificados.');
         } else {
             session()->forget('no_results');
         }
@@ -124,7 +124,7 @@ class ConfirmacionController extends Controller
         $confirmacionExistente = Confirmacion::where('persona_confirmada_id', $request->persona_confirmada_id)->first();
         if ($confirmacionExistente) {
             return redirect()->back()->withErrors([
-                'persona_confirmada_id' => 'La persona indicada ya ha sido confirmada previamente.',
+                'persona_confirmada_id' => 'Esta persona ya ha sido confirmada previamente.',
             ]);
         }
 
@@ -152,6 +152,7 @@ class ConfirmacionController extends Controller
 
         return redirect()->route('confirmaciones.index')->with('success', 'Confirmación guardada exitosamente.');
     }
+
 
     /**
      * Obtiene los municipios basados en el departamento seleccionado.

@@ -1,14 +1,16 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use App\Models\Casamiento;
 use App\Models\Departamento;
 use App\Models\Municipio;
+use App\Models\Testigo;
+use App\Models\Persona;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
-
+use Illuminate\Support\Facades\Log;
 class CasamientoController extends Controller
 {
     /**
@@ -16,83 +18,143 @@ class CasamientoController extends Controller
      */
     public function index(Request $request)
     {
-        $nombreEsposo = $request->input('nombre_esposo');
-        $nombreEsposa = $request->input('nombre_esposa');
-        $anio = $request->input('anio');
+        $search = $request->input('search');
 
-        // Filtrar por nombre del esposo, esposa y año si se proporcionan parámetros
-        $casamientos = Casamiento::query()
-            ->when($nombreEsposo, function ($query, $nombreEsposo) {
-                return $query->where('nombre_esposo', 'like', "%{$nombreEsposo}%");
-            })
-            ->when($nombreEsposa, function ($query, $nombreEsposa) {
-                return $query->where('nombre_esposa', 'like', "%{$nombreEsposa}%");
-            })
-            ->when($anio, function ($query, $anio) {
-                return $query->whereYear('fecha_casamiento', $anio);
-            })
-            ->paginate(10);
-        // Verifica si no se encontraron resultados y añade mensaje a la sesión
+        // Crear la consulta base con las relaciones
+        $query = Casamiento::with([
+            'esposo',
+            'esposa'
+        ]);
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                if (is_numeric($search)) {
+                    $q->whereHas('esposo', function ($q) use ($search) {
+                        $q->where('dpi_cui', 'LIKE', '%' . $search . '%');
+                    })
+                        ->orWhereHas('esposa', function ($q) use ($search) {
+                            $q->where('dpi_cui', 'LIKE', '%' . $search . '%');
+                        });
+                } else {
+                    $q->whereHas('esposo', function ($q) use ($search) {
+                        $q->whereRaw("CONCAT(nombres, ' ', apellidos) LIKE ?", ['%' . $search . '%']);
+                    })
+                        ->orWhereHas('esposa', function ($q) use ($search) {
+                            $q->whereRaw("CONCAT(nombres, ' ', apellidos) LIKE ?", ['%' . $search . '%']);
+                        });
+                }
+            });
+        }
+
+
+        // Paginación de los resultados
+        $casamientos = $query->paginate(10);
+
+        // Mensaje en caso de no encontrar registros
         if ($casamientos->isEmpty()) {
             session()->flash('no_results', 'No se encontraron registros de casamientos con los datos especificados.');
         } else {
             session()->forget('no_results');
         }
-        return view('list-casamiento', compact('casamientos'));
+
+        return view('casamientos.index', compact('casamientos'));
     }
+
+
+
     /**
      * Muestra el formulario para crear un nuevo casamiento.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('casamiento-craete-update');
+        $departamentos = Departamento::all();
+        $departamento_id = old('departamento_id');
+        $municipios = collect();
+
+        // Cargar municipios si ya se seleccionó un departamento
+        if ($departamento_id) {
+            $municipios = Municipio::where('departamento_id', $departamento_id)->get();
+        }
+
+        return view('casamientos.create', compact('departamentos', 'municipios'));
     }
 
     /**
-     * Almacena un nuevo registro de casamiento en la base de datos.
-     */ public function store(Request $request)
+     * Almacena un nuevo casamiento en la base de datos.
+     */
+    public function store(Request $request)
     {
-        // Crear un nuevo casamiento en la base de datos
         $validatedData = $request->validate([
             'NoPartida' => 'required|string|max:20',
             'folio' => 'required|string|max:50',
-            'fecha_casamiento' => 'required|date',
-            'nombres_testigos' => 'required|string',
-            'nombre_esposo' => 'required|string|max:255',
-            'edad_esposo' => 'required|string|max:4',
+            'fecha_casamiento' => 'required|date|before_or_equal:today',
             'origen_esposo' => 'required|string|max:255',
             'feligresesposo' => 'nullable|string|max:255',
-            'nombre_padre_esposo' => 'required|string|max:255',
-            'nombre_madre_esposo' => 'required|string|max:255',
-            'nombre_esposa' => 'required|string|max:255',
-            'edad_esposa' => 'required|string|max:4',
             'origen_esposa' => 'required|string|max:255',
             'feligresesposa' => 'nullable|string|max:255',
-            'nombre_padre_esposa' => 'required|string|max:255',
-            'nombre_madre_esposa' => 'required|string|max:255',
-            'nombre_parroco' => 'required|string|max:255',
+            'esposo_id' => 'required|exists:personas,persona_id',
+            'esposa_id' => 'required|exists:personas,persona_id',
+            'sacerdote_id' => 'required|exists:personas,persona_id',
+            'padre_esposo_id' => 'nullable|exists:personas,persona_id',
+            'madre_esposo_id' => 'nullable|exists:personas,persona_id',
+            'padre_esposa_id' => 'nullable|exists:personas,persona_id',
+            'madre_esposa_id' => 'nullable|exists:personas,persona_id',
+            'testigos' => 'nullable|array|distinct',
+            'testigos.*' => 'exists:personas,persona_id',
+    
         ], [
             'NoPartida.required' => 'El número de partida es obligatorio.',
             'folio.required' => 'El folio es obligatorio.',
             'fecha_casamiento.required' => 'La fecha del casamiento es obligatoria.',
-            'nombres_testigos.required' => 'El nombre de los testigos es obligatorio.',
-            'nombre_esposo.required' => 'El nombre del esposo es obligatorio.',
-            'edad_esposo.required' => 'La edad del esposo es obligatoria.',
+            'fecha_casamiento.before_or_equal' => 'La fecha del casamiento no puede ser mayor a la fecha actual.',
             'origen_esposo.required' => 'El origen del esposo es obligatorio.',
-            'nombre_padre_esposo.required' => 'El nombre del padre del esposo es obligatorio.',
-            'nombre_madre_esposo.required' => 'El nombre de la madre del esposo es obligatorio.',
-            'nombre_esposa.required' => 'El nombre de la esposa es obligatorio.',
-            'edad_esposa.required' => 'La edad de la esposa es obligatoria.',
-            'origen_esposa.required' => 'El origen de la esposa es obligatorio.',
-            'nombre_padre_esposa.required' => 'El nombre del padre de la esposa es obligatorio.',
-            'nombre_madre_esposa.required' => 'El nombre de la madre de la esposa es obligatorio.',
-            'nombre_parroco.required' => 'El nombre del párroco es obligatorio.',
+            'esposo_id.required' => 'El esposo es obligatorio.',
+            'esposa_id.required' => 'La esposa es obligatoria.',
+            'sacerdote_id.required' => 'El sacerdote es obligatorio.',
+            'testigos.*.exists' => 'Uno o más testigos no son válidos.',
+            'testigos.distinct' => 'Los testigos no pueden repetirse.',
+    
         ]);
-
-        $validatedData['dato_parroquia_id'] = 1;
-
+    
+        // Validación para asegurar que al menos un familiar esté ingresado
+        if (!$request->padre_esposo_id && !$request->madre_esposo_id && !$request->padre_esposa_id && !$request->madre_esposa_id) {
+            return redirect()->back()->withErrors([
+                'familiares' => 'Debe ingresar al menos un familiar (padre o madre del esposo o de la esposa).',
+            ]);
+        }
+    
         try {
-            Casamiento::create($validatedData);
+            $casamiento = Casamiento::create($validatedData);
+    
+            // Obtener los datos del esposo y esposa
+            $esposo = Persona::find($request->esposo_id);
+            $esposa = Persona::find($request->esposa_id);
+    
+            // Si el esposo no tiene padres registrados, actualizarlos
+            if (!$esposo->padre_id && $request->padre_esposo_id) {
+                $esposo->update(['padre_id' => $request->padre_esposo_id]);
+            }
+            if (!$esposo->madre_id && $request->madre_esposo_id) {
+                $esposo->update(['madre_id' => $request->madre_esposo_id]);
+            }
+    
+            // Si la esposa no tiene padres registrados, actualizarlos
+            if (!$esposa->padre_id && $request->padre_esposa_id) {
+                $esposa->update(['padre_id' => $request->padre_esposa_id]);
+            }
+            if (!$esposa->madre_id && $request->madre_esposa_id) {
+                $esposa->update(['madre_id' => $request->madre_esposa_id]);
+            }
+    
+            // Guardar los testigos si existen
+            if ($request->has('testigos') && is_array($request->testigos)) {
+                foreach ($request->testigos as $persona_id) {
+                    Testigo::create([
+                        'casamiento_id' => $casamiento->casamiento_id,
+                        'persona_id' => $persona_id
+                    ]);
+                }
+            }
             return redirect()->route('casamientos.index')->with('success', 'Casamiento guardado exitosamente.');
         } catch (\Exception $e) {
             // Registra el error en el archivo de logs y muestra un mensaje en la vista
@@ -100,76 +162,119 @@ class CasamientoController extends Controller
             return redirect()->back()->with('error', 'Error al guardar el casamiento: ' . $e->getMessage());
         }
     }
-    public function show($casamiento_id)
-    {
-        // Buscar el casamiento por su ID
-        $casamiento = Casamiento::findOrFail($casamiento_id);
+    
 
-        // Retornar la vista con los detalles del casamiento
-        return view('casamiento.casamiento-show', compact('casamiento',));
-    }
 
     /**
-     * Actualiza un registro existente de casamiento en la base de datos.
+     * Muestra los detalles de un casamiento.
+     */
+    public function show($casamiento_id)
+    {
+        $casamiento = Casamiento::with([
+            'esposo',
+            'esposa',
+            'sacerdote',
+            'padreEsposo',
+            'madreEsposo',
+            'padreEsposa',
+            'madreEsposa',
+            'testigos.persona'
+        ])->findOrFail($casamiento_id);
+
+        return view('casamientos.show', compact('casamiento'));
+    }
+
+
+    public function destroy($testigo_id)
+    {
+        try {
+            // Busca el testigo por su testigo_id
+            $testigo = Testigo::findOrFail($testigo_id);
+
+            // Elimina el testigo
+            $testigo->delete();
+
+            // Retorna una respuesta JSON de éxito
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            // Retorna una respuesta JSON de error
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+    /**
+     * Actualiza un registro de casamiento existente.
      */
     public function update(Request $request, $casamiento_id)
     {
-        // Validar los datos del formulario con las mismas reglas que el store
+        // Validar los datos del casamiento
         $validatedData = $request->validate([
             'NoPartida' => 'required|string|max:20',
             'folio' => 'required|string|max:50',
             'fecha_casamiento' => 'required|date',
-            'nombres_testigos' => 'required|string',
-            'nombre_esposo' => 'required|string|max:255',
-            'edad_esposo' => 'required|string|max:4',
             'origen_esposo' => 'required|string|max:255',
-            'feligresesposo' => 'nullable|string|max:255',
-            'nombre_padre_esposo' => 'required|string|max:255',
-            'nombre_madre_esposo' => 'required|string|max:255',
-            'nombre_esposa' => 'required|string|max:255',
-            'edad_esposa' => 'required|string|max:4',
+            'feligresia_esposo' => 'nullable|string|max:255',
             'origen_esposa' => 'required|string|max:255',
-            'feligresesposa' => 'nullable|string|max:255',
-            'nombre_padre_esposa' => 'required|string|max:255',
-            'nombre_madre_esposa' => 'required|string|max:255',
-            'nombre_parroco' => 'required|string|max:255',
-        ], [
-            'NoPartida.required' => 'El número de partida es obligatorio.',
-            'folio.required' => 'El folio es obligatorio.',
-            'fecha_casamiento.required' => 'La fecha del casamiento es obligatoria.',
-            'nombres_testigos.required' => 'El nombre de los testigos es obligatorio.',
-            'nombre_esposo.required' => 'El nombre del esposo es obligatorio.',
-            'edad_esposo.required' => 'La edad del esposo es obligatoria.',
-            'origen_esposo.required' => 'El origen del esposo es obligatorio.',
-            'nombre_padre_esposo.required' => 'El nombre del padre del esposo es obligatorio.',
-            'nombre_madre_esposo.required' => 'El nombre de la madre del esposo es obligatorio.',
-            'nombre_esposa.required' => 'El nombre de la esposa es obligatorio.',
-            'edad_esposa.required' => 'La edad de la esposa es obligatoria.',
-            'origen_esposa.required' => 'El origen de la esposa es obligatorio.',
-            'nombre_padre_esposa.required' => 'El nombre del padre de la esposa es obligatorio.',
-            'nombre_madre_esposa.required' => 'El nombre de la madre de la esposa es obligatorio.',
-            'nombre_parroco.required' => 'El nombre del párroco es obligatorio.',
+            'feligresia_esposa' => 'nullable|string|max:255',
+            'esposo_id' => 'required|exists:personas,persona_id',
+            'esposa_id' => 'required|exists:personas,persona_id',
+            'sacerdote_id' => 'required|exists:personas,persona_id',
+            'padre_esposo_id' => 'nullable|exists:personas,persona_id',
+            'madre_esposo_id' => 'nullable|exists:personas,persona_id',
+            'padre_esposa_id' => 'nullable|exists:personas,persona_id',
+            'madre_esposa_id' => 'nullable|exists:personas,persona_id',
+            'testigos' => 'nullable|array', // Array de IDs de testigos
+            'testigos.*' => 'exists:personas,persona_id', // Cada testigo debe existir en la tabla personas
         ]);
 
-        // Buscar el casamiento por ID
+        // Buscar el casamiento
         $casamiento = Casamiento::findOrFail($casamiento_id);
 
-        // Actualizar los datos del casamiento con los valores validados
+        // Actualizar los datos del casamiento
         $casamiento->update($validatedData);
 
-        // Redirigir al listado de casamientos con un mensaje de éxito
+        // Sincronizar los testigos
+        if ($request->has('testigos') && is_array($request->testigos)) {
+            foreach ($request->testigos as $persona_id) {
+                // Verifica si ya existe la relación para evitar duplicados
+                if (!Testigo::where('casamiento_id', $casamiento->casamiento_id)->where('persona_id', $persona_id)->exists()) {
+                    Testigo::create([
+                        'casamiento_id' => $casamiento->casamiento_id,
+                        'persona_id' => $persona_id
+                    ]);
+                }
+            }
+        }
+
+
         return redirect()->route('casamientos.index')->with('success', 'Casamiento actualizado exitosamente.');
     }
 
+    public function edit($casamiento_id)
+    {
+        $casamiento = Casamiento::with([
+            'esposo',
+            'esposa',
+            'sacerdote',
+            'padreEsposo',
+            'madreEsposo',
+            'padreEsposa',
+            'madreEsposa',
+            'testigos.persona'
+        ])->findOrFail($casamiento_id);
+
+        $departamentos = Departamento::all();
+        $municipios = Municipio::where('departamento_id', $casamiento->esposo->departamento_id ?? null)->get();
+
+        return view('casamientos.edit', compact('casamiento', 'departamentos', 'municipios'));
+    }
+
+    /**
+     * Genera el PDF de un casamiento.
+     */
     public function generatePDF($casamiento_id)
     {
-        // Buscar el casamiento por ID
         $casamiento = Casamiento::findOrFail($casamiento_id);
-
-        // Cargar la vista del PDF y pasar los datos
-        $pdf = PDF::loadView('pdf.casamiento', compact('casamiento'));
-
-        // Retornar el PDF para verlo en el navegador (no descargar)
+        $pdf = PDF::loadView('casamientos.pdf', compact('casamiento'));
         return $pdf->stream('constancia-casamiento.pdf');
     }
 }
