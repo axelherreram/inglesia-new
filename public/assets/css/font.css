@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'Dexterous';
+    src: url('../fonts/Dexterous.eot'); 
+    src: url('../fonts/Dexterous.eot') format('embedded-opentype'), 
+         url('../fonts/Dexterous.woff2') format('woff2'), 
+         url('../fonts/Dexterous.woff') format('woff'),
+         url('../fonts/Dexterous.ttf') format('truetype'); 
+    font-weight: normal;
+    font-style: normal;
+}
