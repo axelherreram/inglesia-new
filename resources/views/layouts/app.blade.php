@@ -27,8 +27,10 @@
     <link rel="stylesheet" href="{{ asset('assets/css/semi-dark.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/header-colors.css') }}" />
     <link rel="shortcut icon" href="{{ asset('assets/icon/icon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+
     <title>Iglesia Sansare</title>
     <style>
         footer {
@@ -60,9 +62,9 @@
         <!-- End Search Model -->
         <!--start overlay-->
     </div>
-    {{--     <footer class="sticky-bottom ">
+    {{-- <footer class="sticky-bottom ">
         <a href="dashboard" class="btn border">
-            <img src="{{ asset('/assets/icon/Vector.svg') }}"  alt="" >
+            <img src="{{ asset('/assets/icon/Vector.svg') }}" alt="">
         </a>
     </footer> --}}
     <!--end wrapper-->

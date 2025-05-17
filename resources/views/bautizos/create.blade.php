@@ -280,7 +280,7 @@
 
                         <div class="section-card">
                             <div class="section-title">
-                                <i class="lni lni-information"></i> Información Adicional
+                                <i class="lni lni-text-format"></i> Información Adicional
                             </div>
 
                             <div class="row mb-3">

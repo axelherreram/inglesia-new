@@ -8,9 +8,9 @@ use App\Models\Municipio;
 use App\Models\Departamento;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use App\Models\Persona;
-
 class BautizoController extends Controller
 {
+    // Método para mostrar la lista de bautizos
     public function index(Request $request)
     {
         $search = $request->input('search');
@@ -175,6 +175,7 @@ class BautizoController extends Controller
 
         return redirect()->route('bautizos.index')->with('success', 'Bautizo guardado exitosamente.');
     }
+
     public function show($bautizo_id)
     {
         $bautizo = Bautizo::with([

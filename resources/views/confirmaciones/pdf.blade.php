@@ -200,11 +200,11 @@
 
             <div class="form-group">
                 <label for="padre">Hijo de</label>
-                <span>{{ $confirmacion->padre->nombres }} {{ $confirmacion->padre->apellidos }}</span>
+                <span>{{ $confirmacion->padre?->nombres ?? ' ' }} {{ $confirmacion->padre?->apellidos ?? '' }}</span>
             </div>
             <div class="form-group">
                 <label for="">y de</label>
-                <span>{{ $confirmacion->madre->nombres }} {{ $confirmacion->madre->apellidos }}</span>
+                <span>{{ $confirmacion->madre?->nombres ?? ' ' }} {{ $confirmacion->madre?->apellidos ?? '' }}</span>
             </div>
 
             <div class="form-group">
@@ -231,8 +231,10 @@
 
             <div class="form-group">
                 <label for="adrin">Habiendo sido padrino y madrina:</label>
-                <span> <span>{{ $confirmacion->padrino->nombres }} {{ $confirmacion->padrino->apellidos }}</span>
-                    y <span>{{ $confirmacion->madrina->nombres }} {{ $confirmacion->madrina->apellidos }}</span>
+                <span>
+                    {{ $confirmacion->padrino?->nombres ?? ' ' }} {{ $confirmacion->padrino?->apellidos ?? '' }}
+                    y
+                    {{ $confirmacion->madrina?->nombres ?? ' ' }} {{ $confirmacion->madrina?->apellidos ?? '' }}
                 </span>
             </div>
 
