@@ -158,16 +158,15 @@
     <div class="page-wrapper">
         <div class="page-content">
             <div class="persona-card">
-                <div class="card-header">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <a href="{{ route('personas.index') }}" class="btn btn-custom">
+            <div class="form-header p-4" style="color: white">
+                    <div class="header-content">
+                        <a href="{{ route('personas.index') }}" class="back-button">
                             <i class="lni lni-arrow-left"></i> Regresar
                         </a>
-                        <div class="text-center text-white p-3">
-                            <h2 class="persona-title mt-2" style="color: white">{{ $persona->nombres }}
-                                {{ $persona->apellidos }}
-                            </h2>
-                            <p class="persona-subtitle">
+                    </div>
+                    <h2 class="persona-title mt-4" style="color: white">{{ $persona->nombres }}
+                                {{ $persona->apellidos }}</h2>
+                    <p class="persona-subtitle">
                                 @if($persona->tipo_persona == 'F')
                                     Feligrés
                                 @elseif($persona->tipo_persona == 'S')
@@ -177,11 +176,7 @@
                                 @endif
                                 • DPI: {{ $persona->dpi_cui }}
                             </p>
-                        </div>
-                    </div>
                 </div>
-
-
 
                 <div class="info-section">
                     <h3 class="section-title">Información Personal</h3>
@@ -197,10 +192,6 @@
                         <div class="info-item">
                             <span class="info-label">DPI/CUI:</span>
                             <div class="info-value">{{ $persona->dpi_cui }}</div>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Municipio:</span>
-                            <div class="info-value">{{ $persona->municipio->municipio }}</div>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Fecha de Nacimiento:</span>
@@ -237,10 +228,24 @@
                                 @endif
                             </div>
                         </div>
+                    </div>
 
+                    
+                    <div class="section-divider"></div>
+
+                    <h3 class="section-title">Ubicación</h3>
+                    <div class="info-grid row">
                         <div class="info-item">
-                            <span class="info-label">Dirección:</span>
-                            <div class="info-value">{{ $persona->direccion ?? 'No disponible' }}</div>
+                            <span class="info-label">Departamento:</span>
+                            <div class="info-value">{{ $persona->municipio->departamento->depto ?? 'No disponible' }}</div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Municipio:</span>
+                            <div class="info-value">{{ $persona->municipio->municipio }}</div>
+                        </div>
+                        <div class="info-item" style="grid-column: span 2;">
+                                <span class="info-label">Dirección:</span>
+                                <div class="info-value">{{ $persona->direccion ?? 'No disponible' }}</div>
                         </div>
                     </div>
 
@@ -253,7 +258,7 @@
                             <div class="info-value">@if ($persona->padre)
                                 {{ $persona->padre->nombres }} {{ $persona->padre->apellidos }}
                             @else
-                                No especificado
+                                 - 
                             @endif
                             </div>
                         </div>
@@ -262,7 +267,7 @@
                             <div class="info-value"> @if ($persona->madre)
                                 {{ $persona->madre->nombres }} {{ $persona->madre->apellidos }}
                             @else
-                                No especificado
+                                -
                             @endif
                             </div>
                         </div>
@@ -279,7 +284,7 @@
 
                 <!-- Botón de acción -->
                 <div class="action-buttons">
-                    <a href="{{ route('personas.edit', $persona->persona_id) }}" class="edit-button">
+                    <a href="{{ route('personas.edit', $persona->persona_id) }}" class="submit-button">
                         <i class="lni lni-pencil"></i> Editar Información
                     </a>
                 </div>

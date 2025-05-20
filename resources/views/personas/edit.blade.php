@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-
-
 @section('wrapper')
     <div class="page-wrapper">
         <div class="page-content">
@@ -85,18 +83,44 @@
                         <div class="section-card">
                             <h4 class="section-title">Ubicación</h4>
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="municipio" class="form-label">Municipio</label>
-                                        <div class="input-icon">
-                                            <i class="lni lni-map-marker"></i>
-                                            <input type="text" class="form-control" id="municipio" name="municipio"
-                                                placeholder="Municipio" value="{{ $persona->municipio->municipio }}"
-                                                readonly>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="departamento_id" class="form-label">Departamento</label>
+                                <select class="form-control" id="departamento_id" name="departamento_id">
+                            <option value="">Seleccione un departamento</option>
+                            @foreach($departamentos as $departamento)
+                                <option value="{{ $departamento->departamento_id }}"
+                                    {{ $persona->municipio->departamento_id == $departamento->departamento_id ? 'selected' : '' }}>
+                                    {{ $departamento->depto }}
+                                </option>
+                            @endforeach
+                        </select>   
+                                @error('departamento_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="municipio_id" class="form-label">Municipio</label>
+                                <select class="form-control" id="municipio_id" name="municipio_id">
+                                <option value="">Seleccione un municipio</option>
+                                @foreach($municipios as $municipio)
+                                    <option value="{{ $municipio->municipio_id }}"
+                                        {{ $persona->municipio_id == $municipio->municipio_id ? 'selected' : '' }}>
+                                        {{ $municipio->municipio }}
+                                    </option>
+                                @endforeach
+                            </select>   
+                                @error('municipio_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+
+                            </div>
+                        </div>
+                        </div>
+
 
                             <div class="form-group">
                                 <label for="direccion" class="form-label">Dirección</label>
@@ -207,6 +231,55 @@
                 });
             } else {
                 console.error('No se encontraron los elementos necesarios');
+            }
+        });
+
+
+                // CARGA DINÁMICA DE MUNICIPIOS EN EL FORMULARIO DE EDICIÓN
+        document.getElementById('departamento_id').addEventListener('change', function () {
+            let departamento_id = this.value;
+            let municipioSelect = document.getElementById('municipio_id');
+
+            municipioSelect.innerHTML = '<option value="">Seleccione un municipio</option>';
+
+            if (departamento_id) {
+                fetch(`/municipios/${departamento_id}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(municipio => {
+                            let option = document.createElement('option');
+                            option.value = municipio.municipio_id;
+                            option.textContent = municipio.municipio;
+                            municipioSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.error('Error al obtener municipios:', error));
+            }
+        });
+
+        // Cargar municipios al cargar la página si hay un departamento seleccionado
+        window.addEventListener('DOMContentLoaded', function () {
+            const departamentoSelect = document.getElementById('departamento_id');
+            const municipioSelect = document.getElementById('municipio_id');
+            const selectedMunicipioId = "{{ $persona->municipio_id }}";
+
+            if (departamentoSelect.value) {
+                fetch(`/municipios/${departamentoSelect.value}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        municipioSelect.innerHTML = '<option value="">Seleccione un municipio</option>';
+                        data.forEach(municipio => {
+                            const option = document.createElement('option');
+                            option.value = municipio.municipio_id;
+                            option.textContent = municipio.municipio;
+
+                            if (municipio.municipio_id == selectedMunicipioId) {
+                                option.selected = true;
+                            }
+
+                            municipioSelect.appendChild(option);
+                        });
+                    });
             }
         });
     </script>
