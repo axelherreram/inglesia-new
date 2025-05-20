@@ -67,13 +67,13 @@
                         <div class="info-item">
                             <span class="info-label">Padre:</span>
                       <div class="info-value">
-                        {{ ($casamiento->padreEsposo->nombres ?? '') . ' ' . ($casamiento->padreEsposo->apellidos ?? '') }}
+                        {{ ($casamiento->padreEsposo->nombres ?? '') . ' ' . ($casamiento->padreEsposo->apellidos ?? ' - ') }}
                         </div>
 
                         </div>
                         <div class="info-item">
                             <span class="info-label">Madre:</span>
-                            <div class="info-value"> {{ ($casamiento->madreEsposo->nombres ?? '') . ' ' . ($casamiento->madreEsposo->apellidos ?? '') }}</div>
+                            <div class="info-value"> {{ ($casamiento->madreEsposo->nombres ?? '') . ' ' . ($casamiento->madreEsposo->apellidos ?? ' - ') }}</div>
 
                         </div>
                     </div>

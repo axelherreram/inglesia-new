@@ -202,5 +202,17 @@ class PersonasController extends Controller
         return redirect()->route('personas.index')->with('success', 'Persona actualizada exitosamente.');
     }
 
+    public function showJson($id)
+{
+    $persona = Persona::findOrFail($id);
+
+    return response()->json([
+        'persona_id' => $persona->persona_id,
+        'nombres' => $persona->nombres,
+        'apellidos' => $persona->apellidos,
+        'dpi_cui' => $persona->dpi_cui,
+    ]);
+}
+
 
 }
