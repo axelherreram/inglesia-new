@@ -134,9 +134,9 @@
                                     <label for="feligresia_esposo" class="form-label">Feligresía del Esposo:</label>
                                     <div class="input-icon">
                                         <i class="lni lni-church"></i>
-                                        <input type="text" class="form-control" id="feligresia_esposo"
-                                            name="feligresia_esposo"
-                                            value="{{ old('feligresia_esposo', $casamiento->feligresia_esposo) }}">
+                                        <input type="text" class="form-control" id="feligresesposo" name="feligresesposo"
+                                     value="{{ old('feligresesposo', $casamiento->feligresesposo) }}">
+
                                     </div>
                                     @error('feligresia_esposo')
                                         <span class="text-danger">{{ $message }}</span>
@@ -247,9 +247,9 @@
                                     <label for="feligresia_esposa" class="form-label">Feligresía de la Esposa:</label>
                                     <div class="input-icon">
                                         <i class="lni lni-church"></i>
-                                        <input type="text" class="form-control" id="feligresia_esposa"
-                                            name="feligresia_esposa"
-                                            value="{{ old('feligresia_esposa', $casamiento->feligresia_esposa) }}">
+                                        <input type="text" class="form-control" id="feligresesposa" name="feligresesposa"
+                                        value="{{ old('feligresesposa', $casamiento->feligresesposa) }}">
+
                                     </div>
                                     @error('feligresia_esposa')
                                         <span class="text-danger">{{ $message }}</span>

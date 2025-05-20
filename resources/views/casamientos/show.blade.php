@@ -52,11 +52,11 @@
                         </div>
                         <div class="info-item">
                             <span class="info-label">Origen:</span>
-                            <div class="info-value">{{ $casamiento->origen_esposo ?: 'No especificado' }}</div>
+                            <div class="info-value">{{ $casamiento->origen_esposo ?: ' - ' }}</div>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Feligresía:</span>
-                            <div class="info-value">{{ $casamiento->feligresesposo ?: 'No especificado' }}</div>
+                            <div class="info-value">{{ $casamiento->feligresesposo ?: ' - ' }}</div>
                         </div>
                     </div>
 
@@ -96,11 +96,11 @@
                         </div>
                         <div class="info-item">
                             <span class="info-label">Origen:</span>
-                            <div class="info-value">{{ $casamiento->origen_esposa ?: 'No especificado' }}</div>
+                            <div class="info-value">{{ $casamiento->origen_esposa ?: ' - ' }}</div>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Feligresía:</span>
-                            <div class="info-value">{{ $casamiento->feligresesposa ?: 'No especificado' }}</div>
+                            <div class="info-value">{{ $casamiento->feligresesposa ?: ' - ' }}</div>
                         </div>
                     </div>
 
@@ -111,12 +111,12 @@
                         <div class="info-item">
                             <span class="info-label">Padre:</span>
                             <div class="info-value">{{ $casamiento->padreEsposa->nombres ?? '' }} 
-                                {{ $casamiento->padreEsposa->apellidos ?? '' }}</div>
+                                {{ $casamiento->padreEsposa->apellidos ?? ' - ' }}</div>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Madre:</span>
                             <div class="info-value">{{ $casamiento->madreEsposa->nombres ?? '' }} 
-                                {{ $casamiento->madreEsposa->apellidos ?? 'No espeficado' }}</div>
+                                {{ $casamiento->madreEsposa->apellidos ?? ' - ' }}</div>
                         </div>
                     </div>
 
