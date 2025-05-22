@@ -87,7 +87,7 @@
 
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="origen_esposo" class="form-label">Origen:</label>
+                                    <label for="origen_esposo" class="form-label">Dirección:</label>
                                     <div class="input-icon">
                                         <i class="lni lni-map-marker"></i>
                                         <input type="text" class="form-control" id="origen_esposo" name="origen_esposo"
@@ -191,7 +191,7 @@
 
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="origen_esposa" class="form-label">Origen:</label>
+                                    <label for="origen_esposa" class="form-label">Dirección:</label>
                                     <div class="input-icon">
                                         <i class="lni lni-map-marker"></i>
                                         <input type="text" class="form-control" id="origen_esposa" name="origen_esposa"

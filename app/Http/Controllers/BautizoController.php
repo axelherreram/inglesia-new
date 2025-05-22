@@ -77,8 +77,8 @@ class BautizoController extends Controller
     {
         $validatedData = $request->validate([
             'persona_bautizada_id' => 'required|exists:personas,persona_id',
-            'NoPartida' => 'required|string|min:3|max:20|unique:bautizos,NoPartida',
-            'folio' => 'required|string|min:3|max:50|unique:bautizos,folio',
+            'NoPartida' => 'required|string|min:3|max:20|unique:bautizo,NoPartida',
+            'folio' => 'required|string|min:3|max:50|unique:bautizo,folio',
             'fecha_bautizo' => 'required|date|before_or_equal:today',
             'aldea' => 'required|string|max:255',
             'municipio_id' => 'required|exists:municipio,municipio_id',
