@@ -494,6 +494,28 @@
             });
         }
 
+        // Limpia el campo oculto si el usuario borra el texto del campo de búsqueda
+        function setupInputClearOnEmpty(searchInputId, hiddenInputId) {
+            const searchInput = document.getElementById(searchInputId);
+            const hiddenInput = document.getElementById(hiddenInputId);
+            if (searchInput && hiddenInput) {
+                searchInput.addEventListener('input', function() {
+                    if (this.value.trim() === '') {
+                        hiddenInput.value = '';
+                        searchInput.classList.remove('is-valid');
+                    }
+                });
+            }
+        }
+
+        // Aplicar la función a los campos de búsqueda relevantes
+        setupInputClearOnEmpty('persona_confirmada_search', 'persona_confirmada_id');
+        setupInputClearOnEmpty('padre_search', 'padre_id');
+        setupInputClearOnEmpty('madre_search', 'madre_id');
+        setupInputClearOnEmpty('padrino_search', 'padrino_id');
+        setupInputClearOnEmpty('madrina_search', 'madrina_id');
+        setupInputClearOnEmpty('sacerdote_search', 'sacerdote_id');
+
         // Mostrar mensaje de éxito si existe
         @if (session('success'))
             Swal.fire({

@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     <div class="info-item">
-                        <span class="info-label">Aldea:</span>
+                        <span class="info-label">Dirección:</span>
                         <div class="info-value">{{ $bautizo->aldea ?: 'No especificado' }}</div>
                     </div>
                 </div>

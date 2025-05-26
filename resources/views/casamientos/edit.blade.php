@@ -14,11 +14,18 @@
     }
 
     .testigo-item {
-        background-color: #f8f9fa;
-        padding: 10px;
-        border-radius: 5px;
-        margin-bottom: 10px;
+        background-color: #fff;
         border: 1px solid #dee2e6;
+        border-radius: 5px;
+        padding: 10px 16px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .remove-new-testigo {
+        cursor: pointer;
     }
 </style>
 @section('wrapper')
@@ -526,17 +533,13 @@
 
                         // Crear un nuevo elemento para el testigo seleccionado
                         const newTestigo = document.createElement("div");
-                        newTestigo.classList.add("row", "mb-3", "testigo-item");
+                        newTestigo.classList.add("testigo-item", "mb-2");
                         newTestigo.innerHTML = `
-                            <div class="col-md-10">
-                                <input type="text" class="form-control" value="${personaText}" readonly>
-                                <input type="hidden" name="testigos[]" value="${personaId}">
-                            </div>
-                            <div class="col-md-2 d-flex align-items-center">
-                                <button type="button" class="btn btn-danger btn-sm remove-new-testigo">
-                                    <i class="lni lni-trash"></i>
-                                </button>
-                            </div>
+                            <span>${personaText}</span>
+                            <input type="hidden" name="testigos[]" value="${personaId}">
+                            <button type="button" class="btn btn-danger btn-sm remove-new-testigo" title="Eliminar">
+                                <i class="lni lni-trash"></i> Eliminar
+                            </button>
                         `;
                         testigosContainer.appendChild(newTestigo);
 
@@ -552,7 +555,6 @@
                         const testigoItem = e.target.closest(".testigo-item");
                         if (testigoItem) {
                             testigoItem.remove();
-                            console.log("Nuevo testigo eliminado");
                         }
                     }
                 });
@@ -680,6 +682,29 @@
                     }
                 });
             }
+
+            // Limpia el campo oculto si el usuario borra el texto del campo de búsqueda
+            function setupInputClearOnEmpty(searchInputId, hiddenInputId) {
+                const searchInput = document.getElementById(searchInputId);
+                const hiddenInput = document.getElementById(hiddenInputId);
+                if (searchInput && hiddenInput) {
+                    searchInput.addEventListener('input', function() {
+                        if (this.value.trim() === '') {
+                            hiddenInput.value = '';
+                            searchInput.classList.remove('is-valid');
+                        }
+                    });
+                }
+            }
+
+            // Aplicar la función a los campos de búsqueda relevantes
+            setupInputClearOnEmpty('esposo_search', 'esposo_id');
+            setupInputClearOnEmpty('esposa_search', 'esposa_id');
+            setupInputClearOnEmpty('padre_esposo_search', 'padre_esposo_id');
+            setupInputClearOnEmpty('madre_esposo_search', 'madre_esposo_id');
+            setupInputClearOnEmpty('padre_esposa_search', 'padre_esposa_id');
+            setupInputClearOnEmpty('madre_esposa_search', 'madre_esposa_id');
+            setupInputClearOnEmpty('sacerdote_search', 'sacerdote_id');
         });
     </script>
 @endsection

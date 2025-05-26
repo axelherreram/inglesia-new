@@ -116,6 +116,7 @@
                                 @error('municipio_id')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
+                                <span class="text-muted mt-1 d-block">Municipio actual: {{ $persona->municipio->municipio ?? 'No seleccionado' }}</span>
 
                             </div>
                         </div>
@@ -145,7 +146,6 @@
                                         <select class="form-control" id="sexo" name="sexo" required>
                                             <option value="M" {{ $persona->sexo == 'M' ? 'selected' : '' }}>Masculino</option>
                                             <option value="F" {{ $persona->sexo == 'F' ? 'selected' : '' }}>Femenino</option>
-                                            <option value="O" {{ $persona->sexo == 'O' ? 'selected' : '' }}>Otro</option>
                                         </select>
                                         @error('sexo')
                                             <div class="text-danger">{{ $message }}</div>

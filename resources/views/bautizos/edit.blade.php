@@ -73,7 +73,8 @@
                                             <i class="lni lni-search"></i>
                                             <input type="text" id="persona_bautizada_search" class="form-control"
                                                 placeholder="Escribe el nombre, apellido o DPI (mínimo 3 caracteres)"
-                                                value="{{ $bautizo->personaBautizada->nombres }} {{ $bautizo->personaBautizada->apellidos }} - {{ $bautizo->personaBautizada->dpi_cui }}">
+                                                value="{{ old('persona_bautizada_search', $bautizo->personaBautizada->nombres . ' ' . $bautizo->personaBautizada->apellidos . ' - ' . $bautizo->personaBautizada->dpi_cui) }}"
+                                                autocomplete="off">
                                         </div>
                                         <input type="hidden" id="persona_bautizada_id" name="persona_bautizada_id" value="{{ old('persona_bautizada_id', $bautizo->persona_bautizada_id) }}">
                                         <div class="search-results">
@@ -96,7 +97,7 @@
                             
                             <div class="row mb-3">
                                 <div class="col-md-12">
-                                    <label for="aldea" class="form-label">Aldea:</label>
+                                    <label for="aldea" class="form-label">Dirección:</label>
                                     <div class="input-icon">
                                         <i class="lni lni-home"></i>
                                         <input type="text" class="form-control" id="aldea" name="aldea" 
@@ -159,7 +160,8 @@
                                             <i class="lni lni-user"></i>
                                             <input type="text" id="padre_search" class="form-control"
                                                 placeholder="Escribe el nombre, apellido o DPI"
-                                                value="{{ $bautizo->padre ? $bautizo->padre->nombres . ' ' . $bautizo->padre->apellidos . ' - ' . $bautizo->padre->dpi_cui : '' }}">
+                                                value="{{ old('padre_search', $bautizo->padre ? $bautizo->padre->nombres . ' ' . $bautizo->padre->apellidos . ' - ' . $bautizo->padre->dpi_cui : '') }}"
+                                                autocomplete="off">
                                         </div>
                                         <input type="hidden" id="padre_id" name="padre_id" value="{{ old('padre_id', $bautizo->padre_id) }}">
                                         <div class="search-results">
@@ -179,7 +181,8 @@
                                             <i class="lni lni-user"></i>
                                             <input type="text" id="madre_search" class="form-control"
                                                 placeholder="Escribe el nombre, apellido o DPI"
-                                                value="{{ $bautizo->madre ? $bautizo->madre->nombres . ' ' . $bautizo->madre->apellidos . ' - ' . $bautizo->madre->dpi_cui : '' }}">
+                                                value="{{ old('madre_search', $bautizo->madre ? $bautizo->madre->nombres . ' ' . $bautizo->madre->apellidos . ' - ' . $bautizo->madre->dpi_cui : '') }}"
+                                                autocomplete="off">
                                         </div>
                                         <input type="hidden" id="madre_id" name="madre_id" value="{{ old('madre_id', $bautizo->madre_id) }}">
                                         <div class="search-results">
@@ -208,7 +211,8 @@
                                             <i class="lni lni-user"></i>
                                             <input type="text" id="sacerdote_search" class="form-control"
                                                 placeholder="Escribe el nombre, apellido o DPI"
-                                                value="{{ $bautizo->sacerdote ? $bautizo->sacerdote->nombres . ' ' . $bautizo->sacerdote->apellidos . ' - ' . $bautizo->sacerdote->dpi_cui : '' }}">
+                                                value="{{ old('sacerdote_search', $bautizo->sacerdote ? $bautizo->sacerdote->nombres . ' ' . $bautizo->sacerdote->apellidos . ' - ' . $bautizo->sacerdote->dpi_cui : '') }}"
+                                                autocomplete="off">
                                         </div>
                                         <input type="hidden" id="sacerdote_id" name="sacerdote_id" value="{{ old('sacerdote_id', $bautizo->sacerdote_id) }}">
                                         <div class="search-results">
@@ -237,7 +241,8 @@
                                             <i class="lni lni-user"></i>
                                             <input type="text" id="padrino_search" class="form-control"
                                                 placeholder="Escribe el nombre, apellido o DPI"
-                                                value="{{ $bautizo->padrino ? $bautizo->padrino->nombres . ' ' . $bautizo->padrino->apellidos . ' - ' . $bautizo->padrino->dpi_cui : '' }}">
+                                                value="{{ old('padrino_search', $bautizo->padrino ? $bautizo->padrino->nombres . ' ' . $bautizo->padrino->apellidos . ' - ' . $bautizo->padrino->dpi_cui : '') }}"
+                                                autocomplete="off">
                                         </div>
                                         <input type="hidden" id="padrino_id" name="padrino_id" value="{{ old('padrino_id', $bautizo->padrino_id) }}">
                                         <div class="search-results">
@@ -257,7 +262,8 @@
                                             <i class="lni lni-user"></i>
                                             <input type="text" id="madrina_search" class="form-control"
                                                 placeholder="Escribe el nombre, apellido o DPI"
-                                                value="{{ $bautizo->madrina ? $bautizo->madrina->nombres . ' ' . $bautizo->madrina->apellidos . ' - ' . $bautizo->madrina->dpi_cui : '' }}">
+                                                value="{{ old('madrina_search', $bautizo->madrina ? $bautizo->madrina->nombres . ' ' . $bautizo->madrina->apellidos . ' - ' . $bautizo->madrina->dpi_cui : '') }}"
+                                                autocomplete="off">
                                         </div>
                                         <input type="hidden" id="madrina_id" name="madrina_id" value="{{ old('madrina_id', $bautizo->madrina_id) }}">
                                         <div class="search-results">
@@ -499,6 +505,21 @@
                         hiddenInput.value = personaId;
                         searchInput.value = personaText;
                         
+                        // Crear un input oculto para el valor de búsqueda
+                        const searchValueInput = document.createElement('input');
+                        searchValueInput.type = 'hidden';
+                        searchValueInput.name = searchInputId + '_search';
+                        searchValueInput.value = personaText;
+                        
+                        // Eliminar el input anterior si existe
+                        const existingInput = form.querySelector(`input[name="${searchInputId}_search"]`);
+                        if (existingInput) {
+                            existingInput.remove();
+                        }
+                        
+                        // Agregar el nuevo input al formulario
+                        form.appendChild(searchValueInput);
+                        
                         // Añadir una clase para indicar que se ha seleccionado
                         searchInput.classList.add('is-valid');
                         
@@ -513,6 +534,28 @@
                     }
                 });
             }
+
+            // Limpia el campo oculto si el usuario borra el texto del campo de búsqueda
+            function setupInputClearOnEmpty(searchInputId, hiddenInputId) {
+                const searchInput = document.getElementById(searchInputId);
+                const hiddenInput = document.getElementById(hiddenInputId);
+                if (searchInput && hiddenInput) {
+                    searchInput.addEventListener('input', function() {
+                        if (this.value.trim() === '') {
+                            hiddenInput.value = '';
+                            searchInput.classList.remove('is-valid');
+                        }
+                    });
+                }
+            }
+
+            // Aplicar la función a los campos de búsqueda relevantes
+            setupInputClearOnEmpty('persona_bautizada_search', 'persona_bautizada_id');
+            setupInputClearOnEmpty('padre_search', 'padre_id');
+            setupInputClearOnEmpty('madre_search', 'madre_id');
+            setupInputClearOnEmpty('sacerdote_search', 'sacerdote_id');
+            setupInputClearOnEmpty('padrino_search', 'padrino_id');
+            setupInputClearOnEmpty('madrina_search', 'madrina_id');
         });
     </script>
 @endsection

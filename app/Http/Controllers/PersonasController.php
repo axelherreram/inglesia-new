@@ -37,6 +37,12 @@ class PersonasController extends Controller
         return response()->json(['data' => $personas]);
     }
 
+    public function buscarPersonaPorId($id)
+    {
+        $persona = Persona::find($id);
+        return response()->json(['data' => [$persona]]);
+    }
+
     public function index(Request $request)
     {
         $query = Persona::query();
