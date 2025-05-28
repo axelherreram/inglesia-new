@@ -33,8 +33,7 @@
                         <div class="row mb-3">
                             <div class="col-sm-3">
                                 <label for="NoPartida" class="form-label">Partida No:</label>
-                                <input type="text" class="form-control" id="NoPartida" name="NoPartida"
-                                    value="{{ old('NoPartida', $confirmacion->NoPartida) }}">
+                                
                                 @error('NoPartida')
                                     <p class="error-message">{{ $message }}</p>
                                 @enderror
@@ -42,7 +41,8 @@
                             <div class="col-sm-3">
                                 <label for="folio" class="form-label">Folio:</label>
                                 <input type="text" class="form-control" id="folio" name="folio"
-                                    value="{{ old('folio', $confirmacion->folio) }}">
+                                    value="{{ old('folio', $confirmacion->folio) }}"
+                                    required autocomplete="off">
                                 @error('folio')
                                     <p class="error-message">{{ $message }}</p>
                                 @enderror
@@ -55,7 +55,10 @@
                                 @error('fecha_confirmacion')
                                     <p class="error-message">{{ $message }}</p>
                                 @enderror
-                            </div>
+                            <input type="text" class="form-control" id="NoPartida" name="NoPartida"
+    value="{{ old('NoPartida', $confirmacion->NoPartida) }}"
+    required autocomplete="off">
+</div>
                         </div>
 
                         <!-- Sacerdote -->
@@ -65,7 +68,8 @@
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="nombre_persona_confirmo"
                                     name="nombre_persona_confirmo"
-                                    value="{{ old('nombre_persona_confirmo', $confirmacion->nombre_persona_confirmo) }}">
+                                    value="{{ old('nombre_persona_confirmo', $confirmacion->nombre_persona_confirmo) }}"
+                                    required autocomplete="off">
                                 @error('nombre_persona_confirmo')
                                     <p class="error-message">{{ $message }}</p>
                                 @enderror
@@ -79,7 +83,8 @@
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="nombre_persona_confirmada"
                                     name="nombre_persona_confirmada"
-                                    value="{{ old('nombre_persona_confirmada', $confirmacion->nombre_persona_confirmada) }}">
+                                    value="{{ old('nombre_persona_confirmada', $confirmacion->nombre_persona_confirmada) }}"
+                                    required autocomplete="off">
                                 @error('nombre_persona_confirmada')
                                     <p class="error-message">{{ $message }}</p>
                                 @enderror
@@ -90,7 +95,8 @@
                             <div class="col-sm-2">
                                 <label for="edad" class="form-label">Edad:</label>
                                 <input type="number" class="form-control" id="edad" name="edad"
-                                    value="{{ old('edad', $confirmacion->edad) }}">
+                                    value="{{ old('edad', $confirmacion->edad) }}"
+                                    required autocomplete="off">
                                 @error('edad')
                                     <p class="error-message">{{ $message }}</p>
                                 @enderror
@@ -99,7 +105,8 @@
                                 <label for="nombre_parroquia_bautizo" class="form-label">Bautizada en la Parroquía:</label>
                                 <input type="text" class="form-control" id="nombre_parroquia_bautizo"
                                     name="nombre_parroquia_bautizo"
-                                    value="{{ old('nombre_parroquia_bautizo', $confirmacion->nombre_parroquia_bautizo) }}">
+                                    value="{{ old('nombre_parroquia_bautizo', $confirmacion->nombre_parroquia_bautizo) }}"
+                                    required autocomplete="off">
                                 @error('nombre_parroquia_bautizo')
                                     <p class="error-message">{{ $message }}</p>
                                 @enderror
@@ -111,7 +118,8 @@
                             <div class="col-sm-6">
                                 <label for="nombre_padre" class="form-label">Nombre del padre:</label>
                                 <input type="text" class="form-control" id="nombre_padre" name="nombre_padre"
-                                    value="{{ old('nombre_padre', $confirmacion->nombre_padre) }}">
+                                    value="{{ old('nombre_padre', $confirmacion->nombre_padre) }}"
+                                    required autocomplete="off">
                                 @error('nombre_padre')
                                     <p class="error-message">{{ $message }}</p>
                                 @enderror
@@ -119,7 +127,8 @@
                             <div class="col-sm-6">
                                 <label for="nombre_madre" class="form-label">Nombre de la madre:</label>
                                 <input type="text" class="form-control" id="nombre_madre" name="nombre_madre"
-                                    value="{{ old('nombre_madre', $confirmacion->nombre_madre) }}">
+                                    value="{{ old('nombre_madre', $confirmacion->nombre_madre) }}"
+                                    required autocomplete="off">
                                 @error('nombre_madre')
                                     <p class="error-message">{{ $message }}</p>
                                 @enderror
@@ -132,7 +141,8 @@
                                 <label for="nombre_persona_padrino" class="form-label">Nombre del padrino:</label>
                                 <input type="text" class="form-control" id="nombre_persona_padrino"
                                     name="nombre_persona_padrino"
-                                    value="{{ old('nombre_persona_padrino', $confirmacion->nombre_persona_padrino) }}">
+                                    value="{{ old('nombre_persona_padrino', $confirmacion->nombre_persona_padrino) }}"
+                                    required autocomplete="off">
                                 @error('nombre_persona_padrino')
                                     <p class="error-message">{{ $message }}</p>
                                 @enderror
@@ -141,7 +151,8 @@
                                 <label for="nombre_persona_madrina" class="form-label">Nombre de la madrina:</label>
                                 <input type="text" class="form-control" id="nombre_persona_madrina"
                                     name="nombre_persona_madrina"
-                                    value="{{ old('nombre_persona_madrina', $confirmacion->nombre_persona_madrina) }}">
+                                    value="{{ old('nombre_persona_madrina', $confirmacion->nombre_persona_madrina) }}"
+                                    required autocomplete="off">
                                 @error('nombre_persona_madrina')
                                     <p class="error-message">{{ $message }}</p>
                                 @enderror

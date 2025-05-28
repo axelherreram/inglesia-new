@@ -117,32 +117,26 @@ class ConfirmacionController extends Controller
     /**
      * Actualiza un registro existente de confirmación en la base de datos.
      */
-    public function update(Request $request, $confirmacion_id)
-    {
-        // Validar los datos del formulario con las mismas reglas que el store
-        $validatedData = $request->validate([
-            'NoPartida' => 'required|string|max:20',
-            'folio' => 'required|string|max:50',
-            'fecha_confirmacion' => 'required|date',
-            'nombre_persona_confirmo' => 'required|string|max:255',
-            'nombre_persona_confirmada' => 'required|string|max:255',
-            'edad' => 'required|string|max:4',
-            'nombre_parroquia_bautizo' => 'required|string|max:255',
-            'municipio_id' => 'required|exists:municipio,municipio_id',
-            'departamento_id' => 'required|exists:departamento,departamento_id',
-            'nombre_padre' => 'nullable|string|max:255',
-            'nombre_madre' => 'nullable|string|max:255',
-            'nombre_persona_padrino' => 'nullable|string|max:255',
-            'nombre_persona_madrina' => 'nullable|string|max:255',
-        ], [
-            'NoPartida.required' => 'El número de partida es obligatorio.',
-            'folio.required' => 'El folio es obligatorio.',
-            'fecha_confirmacion.required' => 'La fecha de la confirmación es obligatoria.',
-            'nombre_persona_confirmada.required' => 'El nombre de la persona confirmada es obligatorio.',
-            'edad.required' => 'La edad es obligatoria.',
-            'municipio_id.required' => 'El municipio es obligatorio.',
-            'departamento_id.required' => 'El departamento es obligatorio.',
-        ]);
+    public function update(Request $request, $id)
+{
+    $request->validate([
+        'NoPartida' => 'required|string|max:50',
+        'folio' => 'required|string|max:50',
+        'fecha_confirmacion' => 'required|date',
+        'nombre_persona_confirmo' => 'required|string|max:255',
+        'nombre_persona_confirmada' => 'required|string|max:255',
+        'edad' => 'required|integer|min:1|max:150',
+        'nombre_parroquia_bautizo' => 'required|string|max:255',
+        'nombre_padre' => 'required|string|max:255',
+        'nombre_madre' => 'required|string|max:255',
+        'nombre_persona_padrino' => 'required|string|max:255',
+        'nombre_persona_madrina' => 'required|string|max:255',
+        'departamento_id' => 'required|exists:departamentos,departamento_id',
+        'municipio_id' => 'required|exists:municipios,municipio_id',
+    ]);
+    // Luego continúa con la lógica para guardar los datos...
+}
+
 
         // Buscar la confirmación por ID
         $confirmacion = Confirmacion::findOrFail($confirmacion_id);
