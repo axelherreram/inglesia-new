@@ -8,43 +8,51 @@ use Illuminate\Database\Eloquent\Model;
 class Comunion extends Model
 {
     use HasFactory;
-    // Nombre de la tabla en la base de datos
-    protected $table = 'comunion';
-    protected $primaryKey = 'comunion_id'; 
 
+    protected $table = 'comunion'; // Nombre de la tabla
+    protected $primaryKey = 'comunion_id'; // Si la clave primaria no es `id`, especifica el nombre
+    public $timestamps = true; // Si estás utilizando timestamps (created_at, updated_at)
 
-    // Campos que pueden ser rellenados mediante un array
     protected $fillable = [
         'NoPartida',
         'folio',
         'fecha_comunion',
-        'nombre_persona_participe',
-        'nombre_padre',
-        'nombre_madre',
-        'fecha_nacimiento',
-        'nombre_persona_comuion',
-        'dato_parroquia_id',
+        'persona_participe_id',
         'departamento_id',
         'municipio_id',
+        'sacerdote_id',
+        'padre_id',
+        'madre_id',
     ];
-    protected $attributes = [
-        'dato_parroquia_id' => 1, // Valor fijo de 'dato_parroquia_id'
-    ];
-    // Relación con la tabla `dato_general_parroquia`
-    public function parroquia()
+
+    // Relaciones
+    public function personaParticipe()
     {
-        return $this->belongsTo(DatoGeneralParroquia::class, 'dato_parroquia_id', 'dato_parroquia_id');
+        return $this->belongsTo(Persona::class, 'persona_participe_id');
     }
 
-    // Relación con la tabla `departamento`
+    public function sacerdote()
+    {
+        return $this->belongsTo(Persona::class, 'sacerdote_id');
+    }
+
+    public function padre()
+    {
+        return $this->belongsTo(Persona::class, 'padre_id');
+    }
+
+    public function madre()
+    {
+        return $this->belongsTo(Persona::class, 'madre_id');
+    }
+
     public function departamento()
     {
-        return $this->belongsTo(Departamento::class, 'departamento_id', 'departamento_id');
+        return $this->belongsTo(Departamento::class, 'departamento_id');
     }
 
-    // Relación con la tabla `municipio`
     public function municipio()
     {
-        return $this->belongsTo(Municipio::class, 'municipio_id', 'municipio_id');
+        return $this->belongsTo(Municipio::class, 'municipio_id');
     }
 }

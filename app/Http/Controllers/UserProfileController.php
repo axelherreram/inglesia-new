@@ -17,43 +17,52 @@ class UserProfileController extends Controller
     // Actualizar la información del usuario autenticado
     public function update(Request $request)
     {
-        $user = auth()->user(); // Obtener el usuario autenticado
- 
-        // Validación de los datos enviados por el formulario
+        $user = auth()->user();
+
+        // Validación de los datos
         $data = $request->validate([
             'nombres' => 'required|string|max:255',
             'apellidos' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:8', // Contraseña opcional con un mínimo de 8 caracteres
-        ], [
-            'password.min' => 'La contraseña debe tener al menos 8 caracteres.', // Mensaje de error personalizado
         ]);
 
-        // Verificar si se ha cambiado algo
-        $changes = false;
-
-        // Comparar los campos de texto
-        if ($data['nombres'] !== $user->nombres || $data['apellidos'] !== $user->apellidos || $data['email'] !== $user->email) {
-            $changes = true;
+        // Verificar si hay cambios
+        if (
+            $data['nombres'] === $user->nombres &&
+            $data['apellidos'] === $user->apellidos &&
+            $data['email'] === $user->email
+        ) {
+            return back(); // No se actualiza si no hay cambios
         }
 
-        // Verificar si se ha enviado una nueva contraseña
-        if (!empty($data['password'])) {
-            $data['password'] = bcrypt($data['password']);
-            $changes = true; // Si cambia la contraseña, marcar como un cambio
-        } else {
-            unset($data['password']); // No actualizar la contraseña si no se envía
+        try {
+            $user->update($data);
+            return back();
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al actualizar el perfil: ' . $e->getMessage()
+            ], 500);
         }
-
-        // Si no hay cambios, redirigir sin guardar
-        if (!$changes) {
-            return redirect()->route('user.profile')->with('info', 'No se realizaron cambios.');
-        }
-
-        // Actualizar la información del usuario si hay cambios
-        $user->update($data);
-
-        // Redirigir de nuevo al perfil con un mensaje de éxito
-        return redirect()->route('user.profile')->with('success', 'Perfil actualizado con éxito.');
     }
+
+
+    public function changePassword(Request $request)
+    {
+        $user = auth()->user();
+
+        $data = $request->validate([
+            'current_password' => 'required|string',
+            'new_password' => 'required|string|min:8|confirmed',
+        ]);
+
+        if (password_verify($data['current_password'], $user->password)) {
+            $user->update(['password' => bcrypt($data['new_password'])]);
+        }
+
+        return back();
+    }
+
+
+
 }

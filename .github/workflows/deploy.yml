@@ -1,0 +1,35 @@
+name: 🚀 FTP Laravel Deploy (solo archivos nuevos/cambiados)
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  ftp-deploy:
+    name: 🔄 Sync project to cPanel
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repo
+        uses: actions/checkout@v3
+
+      - name: 🚀 FTP deploy (no vendor, no .env)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftp
+          port: 21
+          local-dir: ./
+          server-dir: ${{ secrets.FTP_TARGET_FOLDER }}
+          exclude: |
+            **/.git*
+            **/node_modules/**
+            **/vendor/**
+            .env
+            .github/
+            .git*
+            .github*
+            README.md
