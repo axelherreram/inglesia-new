@@ -18,3 +18,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::get('/personas/buscar', [PersonasController::class, 'buscarPersonas'])->name('personas.buscar');
+Route::get('/personas/buscar/{id}', [PersonasController::class, 'buscarPersonaPorId'])->name('personas.buscar.por.id');

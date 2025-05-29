@@ -36,20 +36,9 @@
             margin-bottom: 20px;
         }
 
-        h2,
-        .form-group label {
-            color: #3d69a8;
-
-        }
-
         h2 {
             font-family: 'Dexterous', Times, serif !important;
-        }
-
-        .form-group label {
-            font-weight: 500;
             color: #3d69a8;
-            font-size: 1.1rem;
         }
 
         .subtitle {
@@ -71,26 +60,43 @@
             display: inline-block;
         }
 
-        .form-content,
-        .form-group span {
+        .azul-parrafo {
+            color: #3d69a8;
+            text-align: justify;
             font-size: 1.2rem;
-            line-height: 1.6;
-            /* Ajuste del interlineado */
+            line-height: 1.8;
         }
 
-        .form-group {
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .azul-parrafo .dato {
+            color: #000;
+            font-weight: normal;
         }
 
         .form-group.date-group {
-            justify-content: space-evenly;
+            font-size: 1.1rem;
+            margin-top: 35px;
+            color: #3d69a8;
+            text-align: center;
         }
 
-        .text-center {
+        .form-group.date-group .dato {
+            color: #000;
+        }
+
+        .signature-line {
             text-align: center;
+            margin-top: 80px;
+            color: #3d69a8;
+        }
+
+        .signature-line hr {
+            width: 200px;
+            margin: 0 auto 5px auto;
+            border-top: 1px solid #3d69a8;
+        }
+
+        .signature-line p {
+            margin: 0;
         }
 
         img.logo {
@@ -117,15 +123,8 @@
             height: 220px;
         }
 
-        span {
-            text-decoration: underline;
-        }
-
-        img.test-image {
-            display: block;
-            margin: 20px auto;
-            width: 100%;
-            height: auto;
+        .text-center {
+            text-align: center;
         }
 
         .h2 {
@@ -134,26 +133,6 @@
             font-size: 2.1rem;
             text-decoration: none !important;
         }
-
-
-        .signature-line-l {
-            position: absolute;
-            right: 40px;
-            width: 350px;
-            margin-top: 60px !important;
-            color: #3d69a8;
-            text-align: right;
-        }
-
-        .signature-line-l hr {
-            width: 100%;
-            border-top: 1px solid #3d69a8;
-        }
-
-        .signature-line-l p {
-            margin-top: 0px;
-            margin-right: 150px;
-        }
     </style>
 </head>
 
@@ -161,89 +140,55 @@
     <div class="certificate">
         <img src="{{ public_path('assets/img/logo_parroquia.png') }}" alt="Logo Parroquia" class="logo left">
         <img src="{{ public_path('assets/img/Mercedes.png') }}" alt="Mercedes" class="logo right">
-        <img src="{{ public_path('assets/img/Cruz.png') }}" alt="Mercedes" class="logo  cruzz">
+        <img src="{{ public_path('assets/img/Cruz.png') }}" alt="Cruz" class="logo cruzz">
 
         <div class="header">
-            <span class="h2">Parroquia Nuestra Señora de Las Mercedes</span>
+            <h2>Parroquia Nuestra Señora de Las Mercedes</h2>
             <p class="subtitle">Diócesis de Jalapa</p>
             <p class="subtitle">Calle al Calvario, Barrio el Centro, Sanarate, El Progreso</p>
             <div class="title">CONSTANCIA DE BAUTIZO</div>
         </div>
 
         <div class="form-content">
-            <div class="form-group" style="width: 20cm;">
-                <label for="parroco">El infrascrito, Párroco:</label>
-                <span>{{ $bautizo->sacerdote->nombres }} {{ $bautizo->sacerdote->apellidos }}</span>
-            </div>
+            <p class="azul-parrafo" style="margin-bottom: 0;">
+                El infrascrito, Párroco: <span class="dato">{{ $bautizo->sacerdote->nombres }} {{ $bautizo->sacerdote->apellidos }}</span>,
+            </p>
 
-            <p class="text-center" style=" font-weight: 500;
-            color: #3d6aa8de;
-            font-size: 1.1rem;">Certifica que en
-                el libro de Bautizos:</p>
-            <div class="form-group">
-                <label for="libro">No.:</label>
-                <span>{{ $bautizo->NoPartida }}</span>
-                <label for="folio" style="margin-left: 10px;">Folio:</label>
-                <span>{{ $bautizo->folio }}</span>
-                <label style="margin-left: 10px;">de esta Parroquia consta que:</label>
-            </div>
-            <div class="form-group">
-                <span>{{ $bautizo->personaBautizada->nombres }}
-                    {{$bautizo->personaBautizada->apellidos}}</span>
-            </div>
-            <div class="form-group">
-                <label for="nacimiento">Nacido el</label>
-                <span>{{ \Carbon\Carbon::parse($bautizo->personaBautizada->fecha_nacimiento)->locale('es')->isoFormat('D') }}</span>
-                <label for="mes" style="margin-left: 5px;">de</label>
-                <span>{{ \Carbon\Carbon::parse($bautizo->personaBautizada->fecha_nacimiento)->locale('es')->isoFormat('MMMM') }}</span>
-                <label for="ano" style="margin-left: 5px;">del año</label>
-                <span>{{ \Carbon\Carbon::parse($bautizo->personaBautizada->fecha_nacimiento)->locale('es')->isoFormat('Y') }}</span>
-            </div>
+            <p class="text-center azul-parrafo" style="margin-top: 0;">
+                Certifica que en el libro de Bautizos:
+            </p>
 
-            <div class="form-group">
-                <label for="dia">Fue bautizad@ el</label>
-                <span>{{ \Carbon\Carbon::parse($bautizo->fecha_bautizo)->locale('es')->isoFormat('D') }}</span>
-                <label for="mes" style="margin-left: 5px;">de</label>
-                <span>{{ \Carbon\Carbon::parse($bautizo->fecha_bautizo)->locale('es')->isoFormat('MMMM') }}</span>
-                <label for="ano" style="margin-left: 5px;">de</label>
-                <span>{{ \Carbon\Carbon::parse($bautizo->fecha_bautizo)->locale('es')->isoFormat('Y') }}</span>
-            </div>
+            <p class="azul-parrafo">
+                No.: <span class="dato">{{ $bautizo->NoPartida }}</span>, Folio: <span class="dato">{{ $bautizo->folio }}</span> de esta Parroquia consta que 
+                <span class="dato">{{ $bautizo->personaBautizada->nombres }} {{ $bautizo->personaBautizada->apellidos }}</span>,
+                nacido el <span class="dato">{{ \Carbon\Carbon::parse($bautizo->personaBautizada->fecha_nacimiento)->locale('es')->isoFormat('D') }}</span> de 
+                <span class="dato">{{ \Carbon\Carbon::parse($bautizo->personaBautizada->fecha_nacimiento)->locale('es')->isoFormat('MMMM') }}</span> del año 
+                <span class="dato">{{ \Carbon\Carbon::parse($bautizo->personaBautizada->fecha_nacimiento)->locale('es')->isoFormat('Y') }}</span>,
+                fue bautizad@ el día <span class="dato">{{ \Carbon\Carbon::parse($bautizo->fecha_bautizo)->locale('es')->isoFormat('D') }}</span> de 
+                <span class="dato">{{ \Carbon\Carbon::parse($bautizo->fecha_bautizo)->locale('es')->isoFormat('MMMM') }}</span> de 
+                <span class="dato">{{ \Carbon\Carbon::parse($bautizo->fecha_bautizo)->locale('es')->isoFormat('Y') }}</span>,
+                hijo de <span class="dato">{{ $bautizo->padre?->nombres ?? '' }} {{ $bautizo->padre?->apellidos ?? '' }}</span> y de 
+                <span class="dato">{{ $bautizo->madre?->nombres ?? '' }} {{ $bautizo->madre?->apellidos ?? '' }}</span>,
+                habiendo sido padrino y madrina <span class="dato">{{ $bautizo->padrino?->nombres ?? '' }} {{ $bautizo->padrino?->apellidos ?? '' }}</span> y 
+                <span class="dato">{{ $bautizo->madrina?->nombres ?? '' }} {{ $bautizo->madrina?->apellidos ?? '' }}</span>.
+            </p>
 
+            <p class="azul-parrafo">
+                Margen: <span class="dato">{{ $bautizo->margen }}</span>
+            </p>
 
-            <div class="form-group">
-                <label>hijo de</label>
-                <span>{{ $bautizo->padre?->nombres ?? ' ' }} {{ $bautizo->padre?->apellidos ?? '' }}</span>
-            </div>
-            <div class="form-group">
-                <label>y de</label>
-                <span>{{ $bautizo->madre?->nombres ?? ' ' }} {{ $bautizo->madre?->apellidos ?? '' }}</span>
-            </div>
-
-            <div class="form-group">
-                <label>Habiendo sido madrina y padrino</label>
-                <span>
-                    {{ $bautizo->padrino?->nombres ?? ' ' }} {{ $bautizo->padrino?->apellidos ?? '' }}
-                    <label style="margin: 0 5px;">y</label>
-                    {{ $bautizo->madrina?->nombres ?? ' ' }} {{ $bautizo->madrina?->apellidos ?? '' }}
-                </span>
-            </div>
-
-            <div class="form-group">
-                <label>Margen:</label>
-                <span>{{ $bautizo->margen }}</span>
-            </div>
-
-            <div class="form-group date-group" style="width: 16.59cm !important; margin-top:45px;">
-                <span class="day">{{ now()->format('d') }}</span>
-                <label>. de </label>
-                <span class="month">{{ now()->locale('es')->isoFormat('MMMM') }}</span>
-                <label>. de </label>
-                <span class="year">{{ now()->format('Y') }}</span>
+            <div class="form-group date-group">
+                <span class="dato">{{ now()->format('d') }}</span>
+                <span>. de </span>
+                <span class="dato">{{ now()->locale('es')->isoFormat('MMMM') }}</span>
+                <span>. de </span>
+                <span class="dato">{{ now()->format('Y') }}</span>
             </div>
         </div>
-        <div class="signature-line-l">
+
+        <div class="signature-line">
             <hr>
-            <p><strong>Parroco</strong></p>
+            <p><strong>Párroco</strong></p>
         </div>
     </div>
 </body>

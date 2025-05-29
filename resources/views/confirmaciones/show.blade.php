@@ -12,7 +12,7 @@
                         </a>
                     </div>
                     <h2 class="persona-title mt-4" style="color: white">Registro de Confirmación</h2>
-                    <p class="persona-subtitle">Partida: {{ $confirmacion->NoPartida }} • Folio: {{ $confirmacion->folio }}
+                    <p class="persona-subtitle">No. Libro: {{ $confirmacion->NoPartida }} • Folio: {{ $confirmacion->folio }}
                     </p>
                 </div>
 
@@ -20,7 +20,7 @@
                     <h3 class="section-title">Información de la Confirmación</h3>
                     <div class="info-grid">
                         <div class="info-item">
-                            <span class="info-label">Partida No:</span>
+                            <span class="info-label">No. Libro:</span>
                             <div class="info-value">{{ $confirmacion->NoPartida }}</div>
                         </div>
                         <div class="info-item">

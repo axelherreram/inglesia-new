@@ -228,7 +228,7 @@
                             let option = document.createElement('option');
                             option.value = municipio.municipio_id;
                             option.textContent = municipio.municipio;
-                            option.selected = municipio.municipio_id == {{ old('municipio_id') ?? 'null' }};
+                            option.selected = municipio.municipio_id == "{{ old('municipio_id') }}";
                             municipioSelect.appendChild(option);
                         });
                     })

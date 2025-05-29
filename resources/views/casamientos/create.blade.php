@@ -70,7 +70,7 @@
                                         <div class="input-icon">
                                             <i class="lni lni-search"></i>
                                             <input type="text" id="esposo_search" class="form-control"
-                                                placeholder="Escribe el nombre, apellido o DPI (mínimo 3 caracteres)">
+                                                placeholder="Escribe el nombre, apellido o DPI (mínimo 3 caracteres)" autocomplete="off">
                                         </div>
                                         <input type="hidden" id="esposo_id" name="esposo_id" value="{{ old('esposo_id') }}">
                                         <div class="search-results">
@@ -87,7 +87,7 @@
 
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="origen_esposo" class="form-label">Origen:</label>
+                                    <label for="origen_esposo" class="form-label">Dirección:</label>
                                     <div class="input-icon">
                                         <i class="lni lni-map-marker"></i>
                                         <input type="text" class="form-control" id="origen_esposo" name="origen_esposo"
@@ -123,7 +123,7 @@
                                         <div class="input-icon">
                                             <i class="lni lni-search"></i>
                                             <input type="text" id="padre_esposo_search" class="form-control"
-                                                placeholder="Buscar padre del esposo">
+                                                placeholder="Buscar padre del esposo" autocomplete="off">
                                         </div>
                                         <input type="hidden" id="padre_esposo_id" name="padre_esposo_id"
                                             value="{{ old('padre_esposo_id') }}">
@@ -144,7 +144,7 @@
                                         <div class="input-icon">
                                             <i class="lni lni-search"></i>
                                             <input type="text" id="madre_esposo_search" class="form-control"
-                                                placeholder="Buscar madre del esposo">
+                                                placeholder="Buscar madre del esposo" autocomplete="off">
                                         </div>
                                         <input type="hidden" id="madre_esposo_id" name="madre_esposo_id"
                                             value="{{ old('madre_esposo_id') }}">
@@ -174,7 +174,7 @@
                                         <div class="input-icon">
                                             <i class="lni lni-search"></i>
                                             <input type="text" id="esposa_search" class="form-control"
-                                                placeholder="Escribe el nombre, apellido o DPI (mínimo 3 caracteres)">
+                                                placeholder="Escribe el nombre, apellido o DPI (mínimo 3 caracteres)" autocomplete="off">
                                         </div>
                                         <input type="hidden" id="esposa_id" name="esposa_id" value="{{ old('esposa_id') }}">
                                         <div class="search-results">
@@ -191,7 +191,7 @@
 
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="origen_esposa" class="form-label">Origen:</label>
+                                    <label for="origen_esposa" class="form-label">Dirección:</label>
                                     <div class="input-icon">
                                         <i class="lni lni-map-marker"></i>
                                         <input type="text" class="form-control" id="origen_esposa" name="origen_esposa"
@@ -227,7 +227,7 @@
                                         <div class="input-icon">
                                             <i class="lni lni-search"></i>
                                             <input type="text" id="padre_esposa_search" class="form-control"
-                                                placeholder="Buscar padre de la esposa">
+                                                placeholder="Buscar padre de la esposa" autocomplete="off">
                                         </div>
                                         <input type="hidden" id="padre_esposa_id" name="padre_esposa_id"
                                             value="{{ old('padre_esposa_id') }}">
@@ -248,7 +248,7 @@
                                         <div class="input-icon">
                                             <i class="lni lni-search"></i>
                                             <input type="text" id="madre_esposa_search" class="form-control"
-                                                placeholder="Buscar madre de la esposa">
+                                                placeholder="Buscar madre de la esposa" autocomplete="off">
                                         </div>
                                         <input type="hidden" id="madre_esposa_id" name="madre_esposa_id"
                                             value="{{ old('madre_esposa_id') }}">
@@ -278,7 +278,7 @@
                                         <div class="input-icon">
                                             <i class="lni lni-search"></i>
                                             <input type="text" id="sacerdote_search" class="form-control"
-                                                placeholder="Buscar sacerdote">
+                                                placeholder="Buscar sacerdote" autocomplete="off">
                                         </div>
                                         <input type="hidden" id="sacerdote_id" name="sacerdote_id"
                                             value="{{ old('sacerdote_id') }}">
@@ -309,7 +309,7 @@
                                         <div class="input-icon">
                                             <i class="lni lni-search"></i>
                                             <input type="text" id="testigo_search" class="form-control"
-                                                placeholder="Buscar testigo">
+                                                placeholder="Buscar testigo" autocomplete="off">
                                         </div>
                                         <div class="search-results">
                                             <select id="select_testigo" class="form-control" style="display: none;"
@@ -380,11 +380,13 @@
                     newTestigo.classList.add("row", "mb-3", "testigo-item");
                     newTestigo.innerHTML = `
                         <div class="col-md-10">
-                            <input type="text" class="form-control" name="testigos_seleccionados[]" value="${personaText}" readonly>
+                            <input type="text" class="form-control" value="${personaText}" readonly>
                             <input type="hidden" name="testigos[]" value="${personaId}">
                         </div>
-                        <div class="col-md-2 d-flex align-items-end">
-                            <button type="button" class="btn btn-danger remove-testigo">X</button>
+                        <div class="col-md-2 d-flex align-items-center">
+                            <button type="button" class="btn btn-danger btn-sm remove-new-testigo">
+                                <i class="lni lni-trash"></i>
+                            </button>
                         </div>
                     `;
                     testigosContainer.appendChild(newTestigo);

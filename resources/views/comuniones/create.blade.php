@@ -28,7 +28,7 @@
 
                             <div class="row mb-3">
                                 <div class="col-md-4">
-                                    <label for="NoPartida" class="form-label required-field">Partida No:</label>
+                                    <label for="NoPartida" class="form-label required-field">No. Libro:</label>
                                     <div class="input-icon">
                                         <i class="lni lni-ticket"></i>
                                         <input type="text" class="form-control" id="NoPartida" name="NoPartida"
@@ -75,7 +75,7 @@
                                         <div class="input-icon">
                                             <i class="lni lni-search"></i>
                                             <input type="text" id="sacerdote_search" class="form-control"
-                                                placeholder="Escribe el nombre, apellido o DPI">
+                                                placeholder="Escribe el nombre, apellido o DPI" autocomplete="off">
                                         </div>
                                         <input type="hidden" id="sacerdote_id" name="sacerdote_id"
                                             value="{{ old('sacerdote_id') }}">
@@ -106,7 +106,7 @@
                                         <div class="input-icon">
                                             <i class="lni lni-search"></i>
                                             <input type="text" id="persona_comunion_search" class="form-control"
-                                                placeholder="Escribe el nombre, apellido o DPI (mínimo 3 caracteres)">
+                                                placeholder="Escribe el nombre, apellido o DPI (mínimo 3 caracteres)" autocomplete="off">
                                         </div>
                                         <input type="hidden" id="persona_participe_id" name="persona_participe_id"
                                             value="{{ old('persona_participe_id') }}">
@@ -136,7 +136,7 @@
                                         <div class="input-icon">
                                             <i class="lni lni-user"></i>
                                             <input type="text" id="padre_search" class="form-control"
-                                                placeholder="Escribe el nombre, apellido o DPI">
+                                                placeholder="Escribe el nombre, apellido o DPI" autocomplete="off">
                                         </div>
                                         <input type="hidden" id="padre_id" name="padre_id" value="{{ old('padre_id') }}">
                                         <div class="search-results">
@@ -155,7 +155,7 @@
                                         <div class="input-icon">
                                             <i class="lni lni-user"></i>
                                             <input type="text" id="madre_search" class="form-control"
-                                                placeholder="Escribe el nombre, apellido o DPI">
+                                                placeholder="Escribe el nombre, apellido o DPI" autocomplete="off">
                                         </div>
                                         <input type="hidden" id="madre_id" name="madre_id" value="{{ old('madre_id') }}">
                                         <div class="search-results">

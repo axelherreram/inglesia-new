@@ -40,6 +40,7 @@ Route::middleware(['auth'])->group(function () {
     // Rutas para la gestión de usuarios
     Route::resource('personas', PersonasController::class)->except(['destroy']);
     Route::get('/personas/buscar', [PersonasController::class, 'buscarPersonas'])->name('personas.buscar');
+    Route::get('/api/personas/{persona}', [PersonasController::class, 'showJson'])->name('personas.showJson');
 
     // routes/web.php
     // Rutas para la gestión de 
@@ -64,6 +65,8 @@ Route::middleware(['auth'])->group(function () {
     // Rutas para casamientos
     Route::resource('casamientos', CasamientoController::class);
     Route::get('/casamientos/{casamiento_id}/pdf', [CasamientoController::class, 'generatePDF'])->name('casamientos.pdf');
+    
+    
     // Ruta para eliminar un testigo
     Route::delete('/casamientos/testigos/{testigo_id}', [CasamientoController::class, 'destroy'])
         ->name('casamientos.testigos.destroy');

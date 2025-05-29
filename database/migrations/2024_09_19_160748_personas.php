@@ -16,7 +16,7 @@ class personas extends Migration
             $table->integer('municipio_id')->unsigned();
             $table->string('direccion', 255)->nullable();
             $table->date('fecha_nacimiento');
-            $table->enum('sexo', ['M', 'F', 'O']);
+            $table->enum('sexo', ['M', 'F']);
             $table->string('num_telefono', 20)->nullable();
             $table->enum('tipo_persona', ['F', 'S', 'O'])->comment('F: Feligrés, S: Sacerdote, O: Otro');
             $table->integer('padre_id')->unsigned()->nullable();

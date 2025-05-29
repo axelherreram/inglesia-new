@@ -77,8 +77,8 @@ class BautizoController extends Controller
     {
         $validatedData = $request->validate([
             'persona_bautizada_id' => 'required|exists:personas,persona_id',
-            'NoPartida' => 'required|string|min:3|max:20|unique:bautizos,NoPartida',
-            'folio' => 'required|string|min:3|max:50|unique:bautizos,folio',
+            'NoPartida' => 'required|string|min:3|max:20|unique:bautizo,NoPartida',
+            'folio' => 'required|string|min:3|max:50|unique:bautizo,folio',
             'fecha_bautizo' => 'required|date|before_or_equal:today',
             'aldea' => 'required|string|max:255',
             'municipio_id' => 'required|exists:municipio,municipio_id',
@@ -124,6 +124,8 @@ class BautizoController extends Controller
         ]);
 
         if (!$request->padre_id && !$request->madre_id) {
+            // Guardar los valores de búsqueda en la sesión
+            $this->saveSearchValues($request);
             return redirect()->back()->withErrors([
                 'padre_id' => 'Debe registrar al menos un padre o una madre.',
                 'madre_id' => 'Debe registrar al menos un padre o una madre.',
@@ -133,6 +135,8 @@ class BautizoController extends Controller
         // Verificar si ya existe un bautizo para la persona bautizada
         $bautizoExistente = Bautizo::where('persona_bautizada_id', $request->persona_bautizada_id)->first();
         if ($bautizoExistente) {
+            // Guardar los valores de búsqueda en la sesión
+            $this->saveSearchValues($request);
             return redirect()->back()->withErrors([
                 'persona_bautizada_id' => 'Esta persona ya ha sido bautizada previamente.',
             ]);
@@ -154,6 +158,8 @@ class BautizoController extends Controller
         });
 
         if (count($personaIds) !== count(array_unique($personaIds))) {
+            // Guardar los valores de búsqueda en la sesión
+            $this->saveSearchValues($request);
             return redirect()->back()->withErrors([
                 'persona_bautizada_id' => 'El mismo persona_id no puede ser usado en varios campos.',
             ]);
@@ -172,8 +178,29 @@ class BautizoController extends Controller
             ]);
         }
 
-
         return redirect()->route('bautizos.index')->with('success', 'Bautizo guardado exitosamente.');
+    }
+
+    /**
+     * Guarda los valores de búsqueda en la sesión
+     */
+    private function saveSearchValues(Request $request)
+    {
+        // Guardar los valores de búsqueda para cada campo
+        $searchFields = [
+            'persona_bautizada_search',
+            'padre_search',
+            'madre_search',
+            'sacerdote_search',
+            'padrino_search',
+            'madrina_search'
+        ];
+
+        foreach ($searchFields as $field) {
+            if ($request->has($field)) {
+                session()->flash($field, $request->input($field));
+            }
+        }
     }
 
     public function show($bautizo_id)
