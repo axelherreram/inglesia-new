@@ -581,12 +581,12 @@
               searchInput.addEventListener('input', function() {
                   const searchValue = this.value;
 
-                  if (searchValue === '') {
-                    hiddenInput.value = '';
-                    searchInput.classList.remove('is-valid');
-                    hideSelect();
-                    return;
-                  }
+                //   if (searchValue === '') {
+                //     hiddenInput.value = '';
+                //     searchInput.classList.remove('is-valid');
+                //     hideSelect();
+                //     return;
+                //   }
                   
                   // Limpiar el temporizador anterior
                   clearTimeout(typingTimer);
@@ -662,10 +662,36 @@
                   }
               });
 
-              if (!hiddenInput.value) {
-                searchInput.value = '';
-              }
+            //   if (!hiddenInput.value) {
+            //     searchInput.value = '';
+            //   }
             }
+
+            function setupInputClearOnEmpty(searchInputId, hiddenInputId) {
+                const searchInput = document.getElementById(searchInputId);
+                const hiddenInput = document.getElementById(hiddenInputId);
+                if (searchInput && hiddenInput) {
+
+                    if (!hiddenInput.value) {
+                        searchInput.value = '';
+                    }
+                    
+                    searchInput.addEventListener('input', function() {
+                        if (this.value.trim() === '') {
+                            hiddenInput.value = '';
+                            searchInput.classList.remove('is-valid');
+                        }
+                    });
+                }
+            }
+
+            // Aplicar la función a los campos de búsqueda relevantes
+            setupInputClearOnEmpty('persona_comunion_search', 'persona_participe_id');
+            setupInputClearOnEmpty('padre_search', 'padre_id');
+            setupInputClearOnEmpty('madre_search', 'madre_id');
+            setupInputClearOnEmpty('padrino_search', 'padrino_id');
+            setupInputClearOnEmpty('madrina_search', 'madrina_id');
+            setupInputClearOnEmpty('sacerdote_search', 'sacerdote_id');
 
           // Mostrar mensaje de éxito si existe
           @if (session('success'))

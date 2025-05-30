@@ -198,7 +198,7 @@ class ComunionController extends Controller
             'fecha_comunion' => 'required|date',
             'municipio_id' => 'required|exists:municipio,municipio_id',
             'departamento_id' => 'required|exists:departamento,departamento_id',
-            'sacerdote_id' => 'nullable|exists:personas,persona_id',
+            'sacerdote_id' => 'required|exists:personas,persona_id',
             'padre_id' => 'nullable|exists:personas,persona_id',
             'madre_id' => 'nullable|exists:personas,persona_id',
         ]);
