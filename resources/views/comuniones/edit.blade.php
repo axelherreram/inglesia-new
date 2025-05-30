@@ -580,6 +580,13 @@
               // Evento cuando se escribe en el campo de búsqueda
               searchInput.addEventListener('input', function() {
                   const searchValue = this.value;
+
+                  if (searchValue === '') {
+                    hiddenInput.value = '';
+                    searchInput.classList.remove('is-valid');
+                    hideSelect();
+                    return;
+                  }
                   
                   // Limpiar el temporizador anterior
                   clearTimeout(typingTimer);
@@ -654,7 +661,11 @@
                       hideSelect();
                   }
               });
-          }
+
+              if (!hiddenInput.value) {
+                searchInput.value = '';
+              }
+            }
 
           // Mostrar mensaje de éxito si existe
           @if (session('success'))
