@@ -499,6 +499,11 @@
             const searchInput = document.getElementById(searchInputId);
             const hiddenInput = document.getElementById(hiddenInputId);
             if (searchInput && hiddenInput) {
+
+                if (!hiddenInput.value) {
+                    searchInput.value = '';
+                }
+
                 searchInput.addEventListener('input', function() {
                     if (this.value.trim() === '') {
                         hiddenInput.value = '';
