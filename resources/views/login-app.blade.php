@@ -81,7 +81,7 @@
                                 <div class="col-md-6">
 
                                 </div>
-                               <!-- <div class="col-md-6 text-end">
+                                <!-- <div class="col-md-6 text-end">
                                     <a href="{{ route('password.request') }}">¿Olvidó la contraseña?</a>
                                 </div> -->
                                 <div class="col-12 d-flex justify-content-end">
