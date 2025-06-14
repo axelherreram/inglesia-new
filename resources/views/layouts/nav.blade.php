@@ -14,6 +14,7 @@
     .nav-item.dropdown {
         border-radius: 10px;
         transition: all 0.3s ease;
+        width: 100%;
     }
 
     .nav-item.dropdown:hover {
@@ -27,6 +28,9 @@
         padding: 0.75rem 1rem;
         border-radius: 10px;
         transition: all 0.3s ease;
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
     }
 
     .nav-link.dropdown-toggle:hover {
@@ -44,6 +48,7 @@
         margin-right: 12px;
         background-color: #f8f9fa;
         transition: all 0.3s ease;
+        flex-shrink: 0;
     }
 
     .parent-icon img {
@@ -78,6 +83,10 @@
         font-weight: 500;
         font-size: 0.95rem;
         color: #444;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex-grow: 1;
     }
 
     /* Estilos para el icono de flecha */
@@ -85,6 +94,8 @@
         display: flex;
         align-items: center;
         transition: transform 0.3s ease;
+        flex-shrink: 0;
+        margin-left: 8px;
     }
 
     .dropy-icon i {
@@ -103,7 +114,8 @@
         box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
         padding: 0.75rem 0;
         margin-top: 0.5rem;
-        min-width: 220px;
+        min-width: 250px;
+        max-width: 300px;
         animation: fadeIn 0.2s ease-in-out;
     }
 
@@ -129,6 +141,9 @@
         border-radius: 6px;
         margin: 0 0.5rem;
         transition: all 0.2s ease;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .dropdown-item i {
@@ -136,6 +151,7 @@
         font-size: 1.1rem;
         opacity: 0.8;
         transition: all 0.2s ease;
+        flex-shrink: 0;
     }
 
     .dropdown-item:hover {
