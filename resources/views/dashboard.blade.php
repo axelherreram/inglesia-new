@@ -156,8 +156,115 @@
             margin-bottom: 2rem;
         }
         
+        /* Estilos para la tarjeta de ayuda del perfil */
+        .profile-help-card {
+            background: linear-gradient(135deg, #4a6cf7 0%, #6a8dff 100%);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            color: white;
+            box-shadow: 0 6px 18px rgba(74, 108, 247, 0.2);
+        }
+
+        .profile-help-card .help-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .profile-help-card .help-title i {
+            font-size: 1.5rem;
+        }
+
+        .profile-help-card .help-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .profile-help-card .help-text {
+            flex: 1;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .profile-help-card .help-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .profile-help-card .help-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        .profile-help-card .help-btn i {
+            font-size: 1.2rem;
+        }
+        
         .stats-row {
             margin-bottom: 2rem;
+        }
+        
+        /* Estilos para los botones de tutorial */
+        .tutorial-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-top: 0.75rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .tutorial-btn i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+
+        .tutorial-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .tutorial-btn-info {
+            background-color: rgba(54, 185, 204, 0.1);
+            color: #36b9cc;
+        }
+
+        .tutorial-btn-danger {
+            background-color: rgba(231, 74, 59, 0.1);
+            color: #e74a3b;
+        }
+
+        .tutorial-btn-success {
+            background-color: rgba(28, 200, 138, 0.1);
+            color: #1cc88a;
+        }
+
+        .tutorial-btn-warning {
+            background-color: rgba(246, 194, 62, 0.1);
+            color: #f6c23e;
         }
         
         /* Estilos responsivos */
@@ -176,6 +283,68 @@
                 height: 24px;
             }
         }
+
+        /* Estilos para la tarjeta de ayuda del módulo de personas */
+        .people-help-card {
+            background: linear-gradient(135deg, #36b9cc 0%, #5cc9d9 100%);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            color: white;
+            box-shadow: 0 6px 18px rgba(54, 185, 204, 0.2);
+        }
+
+        .people-help-card .help-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .people-help-card .help-title i {
+            font-size: 1.5rem;
+        }
+
+        .people-help-card .help-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .people-help-card .help-text {
+            flex: 1;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .people-help-card .help-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .people-help-card .help-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        .people-help-card .help-btn i {
+            font-size: 1.2rem;
+        }
     </style>
 @endsection
 
@@ -186,6 +355,7 @@
                 <h1 class="dashboard-title">Panel de Control</h1>
                 <p class="dashboard-subtitle">Bienvenido al sistema de gestión parroquial. Aquí encontrarás un resumen de los sacramentos registrados.</p>
                 
+ 
                 <div class="row stats-row">
                     <div class="col-12 col-md-6 col-lg-3 mb-4">
                         <div class="card stat-card border-info-custom">
@@ -201,6 +371,12 @@
                                     </div>
                                 </div>
                             </a>
+                            <div class="px-3 pb-3">
+                                <a href="https://www.youtube.com/watch?v=oAg1DWWrKSA" target="_blank" class="tutorial-btn tutorial-btn-info w-100">
+                                    <i class='bx bx-play-circle'></i>
+                                    Ver Tutorial
+                                </a>
+                            </div>
                         </div>
                     </div>
                     
@@ -218,6 +394,12 @@
                                     </div>
                                 </div>
                             </a>
+                            <div class="px-3 pb-3">
+                                <a href="https://www.youtube.com/watch?v=9DLYSsSgwnk" target="_blank" class="tutorial-btn tutorial-btn-danger w-100">
+                                    <i class='bx bx-play-circle'></i>
+                                    Ver Tutorial
+                                </a>
+                            </div>
                         </div>
                     </div>
                     
@@ -235,6 +417,12 @@
                                     </div>
                                 </div>
                             </a>
+                            <div class="px-3 pb-3">
+                                <a href="https://www.youtube.com/watch?v=amCDU7oUUTs" target="_blank" class="tutorial-btn tutorial-btn-success w-100">
+                                    <i class='bx bx-play-circle'></i>
+                                    Ver Tutorial
+                                </a>
+                            </div>
                         </div>
                     </div>
                     
@@ -252,7 +440,48 @@
                                     </div>
                                 </div>
                             </a>
+                            <div class="px-3 pb-3">
+                                <a href="https://www.youtube.com/watch?v=VCRpJg-r4W4" target="_blank" class="tutorial-btn tutorial-btn-warning w-100">
+                                    <i class='bx bx-play-circle'></i>
+                                    Ver Tutorial
+                                </a>
+                            </div>
                         </div>
+                    </div>
+                </div>
+                               <!-- Tarjeta de ayuda del perfil -->
+                               <div class="profile-help-card">
+                    <div class="help-title">
+                        <i class='bx bx-user-circle'></i>
+                        Ayuda del Perfil
+                    </div>
+                    <div class="help-content">
+                        <div class="help-text">
+                            Aprende a gestionar tu perfil, actualizar información personal y configurar las preferencias de tu cuenta. 
+                            Nuestro tutorial te guiará paso a paso en el proceso.
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=eOFkQCY4OYU" target="_blank" class="help-btn">
+                            <i class='bx bx-play-circle'></i>
+                            Ver Tutorial
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tarjeta de ayuda del módulo de personas -->
+                <div class="people-help-card">
+                    <div class="help-title">
+                        <i class='bx bx-group'></i>
+                        Ayuda del Módulo de Personas
+                    </div>
+                    <div class="help-content">
+                        <div class="help-text">
+                            Descubre cómo gestionar el registro de personas, crear nuevos perfiles, buscar y editar información. 
+                            Este tutorial te mostrará todas las funcionalidades disponibles.
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=YOUR_PEOPLE_VIDEO_ID" target="_blank" class="help-btn">
+                            <i class='bx bx-play-circle'></i>
+                            Ver Tutorial
+                        </a>
                     </div>
                 </div>
                 
