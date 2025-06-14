@@ -9,42 +9,66 @@ class Casamiento extends Model
 {
     use HasFactory;
 
-    // Tabla asociada
-    protected $table = 'casamiento';
+    protected $table = 'casamientos'; // Nombre de la tabla
+    protected $primaryKey = 'casamiento_id'; // Si la clave primaria no es `id`, especifica el nombre
+    public $timestamps = true; // Si estás utilizando timestamps (created_at, updated_at)
 
-    // Clave primaria
-    protected $primaryKey = 'casamiento_id';
-
-    // Desactivar timestamps si no los necesitas
-    public $timestamps = true;
-
-    // Campos que se pueden asignar masivamente
     protected $fillable = [
         'NoPartida',
         'folio',
         'fecha_casamiento',
-        'nombres_testigos',
-        'nombre_esposo',
-        'edad_esposo',
         'origen_esposo',
         'feligresesposo',
-        'nombre_padre_esposo',
-        'nombre_madre_esposo',
-        'nombre_esposa',
-        'edad_esposa',
         'origen_esposa',
         'feligresesposa',
-        'nombre_padre_esposa',
-        'nombre_madre_esposa',
-        'nombre_parroco',
-        'dato_parroquia_id'
+        'esposo_id',
+        'esposa_id',
+        'sacerdote_id',
+        'padre_esposo_id',
+        'madre_esposo_id',
+        'padre_esposa_id',
+        'madre_esposa_id',
     ];
-    protected $attributes = [
-        'dato_parroquia_id' => 1, // Valor fijo de 'dato_parroquia_id'
-    ];
-    // Definir relaciones, si es necesario
-    public function parroquia()
+
+    // Relaciones
+    public function esposo()
     {
-        return $this->belongsTo(DatoGeneralParroquia::class, 'dato_parroquia_id');
+        return $this->belongsTo(Persona::class, 'esposo_id');
+    }
+
+    public function esposa()
+    {
+        return $this->belongsTo(Persona::class, 'esposa_id');
+    }
+
+    public function sacerdote()
+    {
+        return $this->belongsTo(Persona::class, 'sacerdote_id');
+    }
+
+    public function padreEsposo()
+    {
+        return $this->belongsTo(Persona::class, 'padre_esposo_id');
+    }
+
+    public function madreEsposo()
+    {
+        return $this->belongsTo(Persona::class, 'madre_esposo_id');
+    }
+
+    public function padreEsposa()
+    {
+        return $this->belongsTo(Persona::class, 'padre_esposa_id');
+    }
+
+    public function madreEsposa()
+    {
+        return $this->belongsTo(Persona::class, 'madre_esposa_id');
+    }
+
+    // Relación con Testigos
+    public function testigos()
+    {
+        return $this->hasMany(Testigo::class, 'casamiento_id');
     }
 }

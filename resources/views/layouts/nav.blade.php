@@ -14,6 +14,7 @@
     .nav-item.dropdown {
         border-radius: 10px;
         transition: all 0.3s ease;
+        width: 100%;
     }
 
     .nav-item.dropdown:hover {
@@ -27,6 +28,9 @@
         padding: 0.75rem 1rem;
         border-radius: 10px;
         transition: all 0.3s ease;
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
     }
 
     .nav-link.dropdown-toggle:hover {
@@ -44,6 +48,7 @@
         margin-right: 12px;
         background-color: #f8f9fa;
         transition: all 0.3s ease;
+        flex-shrink: 0;
     }
 
     .parent-icon img {
@@ -78,6 +83,10 @@
         font-weight: 500;
         font-size: 0.95rem;
         color: #444;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex-grow: 1;
     }
 
     /* Estilos para el icono de flecha */
@@ -85,6 +94,8 @@
         display: flex;
         align-items: center;
         transition: transform 0.3s ease;
+        flex-shrink: 0;
+        margin-left: 8px;
     }
 
     .dropy-icon i {
@@ -103,7 +114,8 @@
         box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
         padding: 0.75rem 0;
         margin-top: 0.5rem;
-        min-width: 220px;
+        min-width: 250px;
+        max-width: 300px;
         animation: fadeIn 0.2s ease-in-out;
     }
 
@@ -129,6 +141,9 @@
         border-radius: 6px;
         margin: 0 0.5rem;
         transition: all 0.2s ease;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .dropdown-item i {
@@ -136,6 +151,7 @@
         font-size: 1.1rem;
         opacity: 0.8;
         transition: all 0.2s ease;
+        flex-shrink: 0;
     }
 
     .dropdown-item:hover {
@@ -194,14 +210,12 @@
         <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
             aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header border-bottom">
-                <a href="{{ route('dashboard') }}" class="d-flex align-items-center">
-                    <div class="">
-                        <img src="{{ asset('/assets/icon/iglesia.png') }}" class="logo-icon" alt="logo icon">
-                    </div>
-                    <div class="">
-                        <h4 class="logo-text fw-bold">Iglesia Sansare</h4>
+                <a href="{{ route('dashboard') }}" class="d-flex align-items-center text-decoration-none gap-2 p-2">
+                    <div class="d-flex align-items-center justify-content-center bg-light p-2 shadow-sm">
+                        <img src="{{ asset('/assets/icon/icono-iglesia.svg') }}" width="250" alt="logo icon" >
                     </div>
                 </a>
+
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
@@ -230,7 +244,6 @@
                             </li>
                         </ul>
                     </li>
-
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
@@ -261,48 +274,48 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
                             data-bs-toggle="dropdown">
-                            <div class="parent-icon"> <img src="{{ asset('/assets/icon/comunion.svg') }}"
-                                    class="logo-icon" alt="logo icon" style="height: 50px">
-                                </i>
+                            <div class="parent-icon">
+                                <img src="{{ asset('/assets/icon/comunion.svg') }}" class="logo-icon" alt="logo icon">
                             </div>
                             <div class="menu-title d-flex align-items-center">Comunión</div>
                             <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item m-0" href="/dashboard-comunion-create">
-                                    <i class="fadeIn animated bx bx-news"></i>
+                                <a class="dropdown-item" href="{{ route('comuniones.create') }}">
+                                    <i class="fadeIn animated bx bx-plus-circle"></i>
                                     Nueva comunión
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item " href="/dashboard-list-comunion">
-                                    <i class='fadeIn animated bx bx-search-alt-2'></i>
+                                <a class="dropdown-item" href="{{ route('comuniones.index') }}">
+                                    <i class='fadeIn animated bx bx-list-ul'></i>
                                     Buscar Comunión
                                 </a>
                             </li>
                         </ul>
                     </li>
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
                             data-bs-toggle="dropdown">
-                            <div class="parent-icon"> <img src="{{ asset('/assets/icon/confirmacion.svg') }}"
-                                    class="logo-icon" alt="logo icon">
-                                </i>
+                            <div class="parent-icon">
+                                <img src="{{ asset('/assets/icon/confirmacion.svg') }}" class="logo-icon"
+                                    alt="logo icon">
                             </div>
                             <div class="menu-title d-flex align-items-center">Confirmación</div>
                             <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item m-0" href="/dashboard-confirmacion-create">
-                                    <i class="fadeIn animated bx bx-news"></i>
+                                <a class="dropdown-item" href="{{ route('confirmaciones.create') }}">
+                                    <i class="fadeIn animated bx bx-plus-circle"></i>
                                     Nueva Confirmación
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item " href="/dashboard-list-confirmacion">
-                                    <i class='fadeIn animated bx bx-search-alt-2'></i>
+                                <a class="dropdown-item" href="{{ route('confirmaciones.index') }}">
+                                    <i class='fadeIn animated bx bx-list-ul'></i>
                                     Buscar Confirmación
                                 </a>
                             </li>
@@ -313,22 +326,21 @@
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
                             data-bs-toggle="dropdown">
                             <div class="parent-icon">
-                                <img src="{{ asset('/assets/icon/casamiento.svg') }} " class="logo-icon" alt="logo icon"
-                                    style="width: 50px">
+                                <img src="{{ asset('/assets/icon/casamiento.svg') }}" class="logo-icon" alt="logo icon">
                             </div>
                             <div class="menu-title d-flex align-items-center">Casamientos</div>
                             <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item m-0" href="/dashboard-casamiento-create">
-                                    <i class="fadeIn animated bx bx-news"></i>
+                                <a class="dropdown-item" href="{{ route('casamientos.create') }}">
+                                    <i class="fadeIn animated bx bx-plus-circle"></i>
                                     Nuevo casamiento
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item " href="/dashboard-list-casamiento">
-                                    <i class='fadeIn animated bx bx-search-alt-2'></i>
+                                <a class="dropdown-item" href="{{ route('casamientos.index') }}">
+                                    <i class='fadeIn animated bx bx-list-ul'></i>
                                     Buscar Casamientos
                                 </a>
                             </li>
@@ -336,6 +348,7 @@
                     </li>
                 </ul>
             </div>
+
         </div>
     </nav>
 </div>

@@ -1,13 +1,10 @@
     <!--start header wrapper-->
     <div class="header-wrapper">
         <header>
-            <div class="topbar d-flex align-items-center m-2">
-                <a href="{{ route('dashboard') }}" class="topbar-logo-header d-none d-lg-flex">
-                    <div class="">
-                        <img src="{{ asset('/assets/icon/iglesia.png') }}" class="logo-icon" alt="logo icon">
-                    </div>
-                    <div class="">
-                        <h4 class="logo-text fw-bold">Iglesia Sansare</h4>
+            <div class="topbar d-flex align-items-center ">
+                <a href="{{ route('dashboard') }}" class="topbar-logo-header d-none d-lg-flex align-items-center text-decoration-none p-2">
+                    <div class="d-flex align-items-center justify-content-center bg-light ">
+                        <img src="{{ asset('/assets/icon/icono.png') }}"  width="200" alt="logo icon" >
                     </div>
                 </a>
                 <div class="mobile-toggle-menu d-block d-lg-none" data-bs-toggle="offcanvas"
@@ -25,7 +22,7 @@
                         <div class="user-info">
                             <!-- Mostrar el nombre del usuario autenticado -->
                             @if (Auth::check())
-                                <p class="user-name mb-0">{{ Auth::user()->nombres }} {{ Auth::user()->apellidos }}
+                                <p class="user-name mb-0">{{ Auth::user()->nombres }} 
                                 </p>
                             @else
                                 <p class="user-name mb-0">Usuario</p>
