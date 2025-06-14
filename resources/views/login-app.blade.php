@@ -81,9 +81,9 @@
                                 <div class="col-md-6">
 
                                 </div>
-                                <div class="col-md-6 text-end">
+                               <!-- <div class="col-md-6 text-end">
                                     <a href="{{ route('password.request') }}">¿Olvidó la contraseña?</a>
-                                </div>
+                                </div> -->
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary-ig col-12 col-md-6">INICIAR
                                         SESIÓN</button>
